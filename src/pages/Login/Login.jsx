@@ -7,7 +7,6 @@ function Login() {
     return (
         <>
             <JoinUs
-                // title={"انضم إلينا!"}
                 title={"مرحبا بك مرة اخرى!"}
                 subTitle={
                     <>
