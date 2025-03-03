@@ -1,19 +1,20 @@
 export default function JoinUs() {
     return (
-        <div className="relative bg-gradient-to-r from-[#FFFAE6] to-[#F4F9FF] py-12 px-6 text-center rounded-lg shadow-lg overflow-hidden">
+        <div className="relative bg-gradient-to-r from-[#FFFAE6] to-[#F4F9FF] py-20 px-6 text-center rounded-lg shadow-lg overflow-hidden">
             {/* Vertical Yellow Wave on the Left */}
-            <div className="absolute left-0 top-0 h-full w-fit">
-                <svg viewBox="0 0 200 200" className="w-full h-full rotate-90">
+            <div className="absolute hidden lg:block lg: top-0 left-0 w-full h-full">
+                <svg viewBox="0 0 3950 600" className="w-full h-full" preserveAspectRatio="none">
                     <path
                         fill="#FFD54F"
-                        d="M0,100 C50,50 150,150 200,100 L200,200 L0,200 Z"
+                        d="M0,0 L400,0 C550,200 200,380 0,1000 Z"
+                        opacity="0.6"
                     ></path>
                 </svg>
             </div>
 
             {/* Left Icon */}
-            <div className="absolute left-10 top-10 text-red-400">
-                <img src="/icons/left-icon.svg" alt="Left Icon" className="w-8 h-8 opacity-70" />
+            <div className="absolute hidden lg:block lg:left-52 top-10 text-red-400">
+                <img src="/laderBoy.png" alt="Left Icon" className="w-12 h-12 opacity-70" />
             </div>
 
             {/* Banner Content */}
@@ -23,8 +24,8 @@ export default function JoinUs() {
             </p>
 
             {/* Right Icon */}
-            <div className="absolute right-10 top-10 text-orange-400">
-                <img src="/icons/right-icon.svg" alt="Right Icon" className="w-8 h-8 opacity-70" />
+            <div className="absolute hidden lg:block lg:right-52 bottom-10 text-orange-400">
+                <img src="/clock.png" alt="Right Icon" className="w-10 h-10 opacity-70" />
             </div>
         </div>
     );
