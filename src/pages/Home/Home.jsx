@@ -1,6 +1,7 @@
 import React from 'react';
 import Slider from "../../components/Slider/Slider.jsx";
 import StageCard from "../../components/Cards/StageCard.jsx";
+import WeeklyCalendar from "../../components/Calendar/WeeklyCalendar.jsx";
 
 function Home() {
     // fake data for banner slider
@@ -34,6 +35,12 @@ function Home() {
                             <StageCard stage={stage} />
                         </div>
                     ))}
+                </div>
+                <div dir="rtl" className="my-6">
+                    <h2 className="text-2xl font-bold text-black px-4">
+                        التقويم الأسبوعي
+                    </h2>
+                    <WeeklyCalendar/>
                 </div>
             </div>
         </div>
