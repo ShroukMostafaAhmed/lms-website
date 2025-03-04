@@ -1,0 +1,39 @@
+export default function VideoCard({video}) {
+    return (
+        <div className="w-[95%] sm:w-72 lg:w-84 hover:scale-103 transition-all duration-300 ease-in-out rounded-lg shadow-lg overflow-hidden">
+            {/* Image Container with Play Button Overlay */}
+            <div className="relative">
+                <img
+                    src={video.img}
+                    alt="Video Thumbnail"
+                    className="w-full h-48 object-cover"
+                />
+                {/* Play Button Overlay */}
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
+                    <button className="bg-white p-4 rounded-full shadow-lg">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={2}
+                            stroke="currentColor"
+                            className="w-8 h-8 text-gray-700"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M5 3l14 9-14 9V3z"
+                            />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            {/* Text Content */}
+            <div className="p-4 text-right">
+                <h3 className="text-lg font-semibold">{video.title} </h3>
+                <p className="text-gray-600 text-sm">{video.desc}</p>
+            </div>
+        </div>
+    );
+}
