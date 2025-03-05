@@ -36,7 +36,7 @@ function Home() {
                 <h2 className="text-2xl font-bold text-black px-4">
                     المراحل التعليمية
                 </h2>
-                <div className="flex flex-wrap items-center mt-6 ">
+                <div className="flex flex-wrap items-center mt-6 gap-4 mx-4 ">
                     {stages.map((stage) => (
                         <div key={stage.id}>
                             <StageCard stage={stage} />
