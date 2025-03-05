@@ -4,6 +4,7 @@ import AppLayout from "./AppLayout.jsx";
 import Home from "./pages/Home/Home.jsx";
 import Login from "./pages/Login/Login.jsx";
 import Register from "./pages/Register/Register.jsx";
+import SkillDetails from "./pages/SkillDetails/SkillDetails.jsx";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
                 { index: true, element: <Home/>},
                 {path: '/login', element: <Login />},
                 {path: '/register', element: <Register />},
+                {path: '/skill_details', element: <SkillDetails />},
             ],
         },
     ])
