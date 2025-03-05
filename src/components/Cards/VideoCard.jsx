@@ -1,6 +1,14 @@
+import {useNavigate} from "react-router-dom";
+
 export default function VideoCard({video}) {
+    // use Navigate
+    const navigate = useNavigate()
+
     return (
-        <div className="w-[95%] sm:w-72 lg:w-84 hover:scale-103 transition-all duration-300 ease-in-out rounded-lg shadow-lg overflow-hidden">
+        <div
+            className="w-[95%] sm:w-72 lg:w-84 hover:scale-103 transition-all duration-300 ease-in-out rounded-lg shadow-lg overflow-hidden cursor-pointer"
+            onClick={() => navigate(`/skill_details` , {state: {id: video.id, title: video.title}})}
+        >
             {/* Image Container with Play Button Overlay */}
             <div className="relative">
                 <img

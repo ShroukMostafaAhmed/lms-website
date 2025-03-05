@@ -1,12 +1,11 @@
 import React from 'react';
-import {Outlet, ScrollRestoration} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 import Header from "./components/main/Header.jsx";
 import Footer from "./components/main/Footer.jsx";
 
 function AppLayout() {
     return (
         <>
-            <ScrollRestoration/>
             <div className="w-full">
                 <Header/>
                 <div className="w-full">

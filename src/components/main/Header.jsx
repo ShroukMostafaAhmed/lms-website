@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { GoArrowUpLeft } from "react-icons/go";
 import { FiMenu, FiX } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
+import {useNavigate} from "react-router-dom";
 
 const Header = () => {
+    // use Navigate
+    const navigate = useNavigate()
+
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -19,7 +23,7 @@ const Header = () => {
         <header className="flex items-center justify-between px-4 lg:px-12 pt-4 bg-white relative">
             <div dir="rtl" className="flex items-center justify-between w-full px-4 lg:px-20 py-2 rounded-full shadow-sm">
                 {/* Logo - center on mobile, right on desktop */}
-                <div className="order-2 lg:order-1" onClick={() => handleScroll("hero")}>
+                <div className="order-2 lg:order-1" onClick={() => navigate('/')}>
                     <img
                         src="/logo.png"
                         alt="Adrees Logo"
@@ -40,7 +44,7 @@ const Header = () => {
 
                 {/* Navigation for desktop */}
                 <nav dir="rtl" className="order-2 hidden lg:flex items-center space-x-8 text-gray-700">
-                    <button onClick={() => handleScroll("hero")} className="font-normal text-[16px] leading-[22.4px] text-[#001F3F] cursor-pointer">الرئيسية</button>
+                    <button onClick={() => navigate('/')} className="font-normal text-[16px] leading-[22.4px] text-[#001F3F] cursor-pointer">الرئيسية</button>
                     <button onClick={() => handleScroll("whyUs")} className="font-normal text-[16px] leading-[22.4px] text-[#001F3F] cursor-pointer">لماذا نحن</button>
                     <button onClick={() => handleScroll("education")} className="font-normal text-[16px] leading-[22.4px] text-[#001F3F] cursor-pointer">المراحل</button>
                     <button onClick={() => handleScroll("subs")} className="font-normal text-[16px] leading-[22.4px] text-[#001F3F] cursor-pointer">الباقات</button>
