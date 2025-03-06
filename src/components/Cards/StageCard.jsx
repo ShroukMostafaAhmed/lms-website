@@ -1,8 +1,15 @@
 import React from 'react';
+import {useNavigate} from "react-router-dom";
 
 function StageCard({ stage }) {
+    // use Navigate
+    const navigate = useNavigate()
+
     return (
-        <div className="relative w-64 lg:w-52 h-48 rounded-xl overflow-hidden shadow-lg hover:scale-105 transition-all duration-300 ease-in-out my-4 lg:my-0">
+        <div
+            className="relative w-64 lg:w-52 h-48 rounded-xl overflow-hidden shadow-lg hover:scale-105 transition-all duration-300 ease-in-out my-4 lg:my-0 cursor-pointer"
+            onClick={() => navigate('/stage_details', { state: { id: stage.id, title: stage.title } })}
+        >
             {/* Background Image */}
             <div
                 className="absolute inset-0 bg-cover bg-center"
