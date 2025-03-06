@@ -43,14 +43,14 @@ function Sidebar() {
 
     return (
         <div dir="rtl" className="lg:flex z-50 lg:flex-col w-auto lg:w-[212px] relative h-16 lg:h-fit shadow-md">
-            <button className="px-3 py-4 text-blue-500 lg:hidden h-fit" onClick={toggleSidebar}>
+            <button className="px-3 py-4 text-blue-500 lg:hidden h-auto" onClick={toggleSidebar}>
                 {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
 
             {/* Sidebar Drawer */}
             <div
                 ref={sidebarRef}
-                className={`fixed top-0 w-[212px] right-0 h-auto bg-[#F9F9F9] shadow-lg p-4 transition-transform overflow-y-auto ${
+                className={`fixed top-0 w-[212px] right-0 h-auto bg-[#F9F9F9] shadow-lg px-4 py-12 transition-transform overflow-y-auto ${
                     isOpen ? 'translate-x-0' : 'translate-x-full'
                 } lg:translate-x-0 lg:relative lg:flex lg:flex-col`}
             >
@@ -60,8 +60,8 @@ function Sidebar() {
                     </button>
                 </div>
 
-                <Link to="/" className="text-center mb-12">
-                    <img src="/logo.png" alt="Logo" className="w-24 mx-auto" />
+                <Link to="/" className="text-center my-12">
+                    <img src="/logo.png" alt="Logo" className="w-32 mx-auto" />
                 </Link>
 
                 <ul className="space-y-14 mx-auto">
@@ -73,8 +73,8 @@ function Sidebar() {
                         return (
                             <li key={item.key}>
                                 <div
-                                    className={`flex items-center space-x-5 cursor-pointer ${
-                                        isActiveCategory ? 'text-[#2079EB]' : 'text-[#4A4A4A]'
+                                    className={`flex items-center space-x-5 rounded-xl px-4 py-2 cursor-pointer font-bold ${
+                                        isActiveCategory ? 'text-[#ffffff] bg-blue-500' : 'text-[#4A4A4A]'
                                     }`}
                                     onClick={() => {
                                         if (item.subcategories.length > 0) {
@@ -86,13 +86,13 @@ function Sidebar() {
                                 >
                                     <div className="flex flex-row gap-1">
                                         {item.subcategories.length > 0 && (
-                                            <span className="text-blue-500">
+                                            <span className="text-blue-500 font-bold">
                                                 {openSections[item.key] ? <ChevronUp size={16} /> : <ChevronLeft size={16} />}
                                             </span>
                                         )}
                                         {item.icon}
                                     </div>
-                                    <span className="lg:block">{item.title}</span>
+                                    <span className="lg:block font-bold">{item.title}</span>
                                 </div>
 
                                 {openSections[item.key] && item.subcategories.length > 0 && (
