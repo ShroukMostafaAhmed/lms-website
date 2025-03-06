@@ -42,15 +42,15 @@ function Sidebar() {
     }, []);
 
     return (
-        <div dir="rtl" className="lg:flex z-50 lg:flex-col w-auto lg:w-[212px] fixed lg:h-screen shadow-md">
-            <button className="px-3 py-4 text-blue-500 lg:hidden" onClick={toggleSidebar}>
+        <div dir="rtl" className="lg:flex z-50 lg:flex-col w-auto lg:w-[212px] relative h-16 lg:h-fit shadow-md">
+            <button className="px-3 py-4 text-blue-500 lg:hidden h-fit" onClick={toggleSidebar}>
                 {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
 
             {/* Sidebar Drawer */}
             <div
                 ref={sidebarRef}
-                className={`fixed top-0 w-[212px] right-0 h-full bg-[#F9F9F9] shadow-lg p-4 transition-transform overflow-y-auto ${
+                className={`fixed top-0 w-[212px] right-0 h-auto bg-[#F9F9F9] shadow-lg p-4 transition-transform overflow-y-auto ${
                     isOpen ? 'translate-x-0' : 'translate-x-full'
                 } lg:translate-x-0 lg:relative lg:flex lg:flex-col`}
             >

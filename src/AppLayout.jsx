@@ -12,11 +12,11 @@ function AppLayout() {
         <>
             <ScrollRestoration/>
             <div className="w-full">
-                <div dir="rtl" className="flex flex-row min-h-screen gap-6">
+                <div dir="rtl" className="flex flex-row min-h-screen gap-3">
                     {location.pathname !== "/login" && location.pathname !== '/register' && (
                         <Sidebar />
                     )}
-                    <div className={`px-6 w-full ${location.pathname !== "/login" && location.pathname !== '/register' && "lg:mr-[182px] mr-[45px]"} `}>
+                    <div className={`w-full `}>
                         <Header/>
                         <div dir="rtl" className="w-full">
                             <Outlet />
