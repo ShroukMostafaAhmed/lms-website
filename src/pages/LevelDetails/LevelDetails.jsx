@@ -1,30 +1,38 @@
-import React, {useEffect} from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
+import {useLocation, useNavigate} from "react-router-dom";
 import Breadcrumb from "../../components/main/BreadCrumb.jsx";
 import BannerCard from "../../components/Cards/BannerCard.jsx";
 import Card from "../../components/Cards/Card.jsx";
 
-function StageDetails() {
+function LevelDetails() {
+    // use location for states that sent from another page
     const location = useLocation();
     const navigate = useNavigate();
-    const state = location.state || {};
-    const title = state.title ?? "Default Title";
+    const state = location.state || JSON.parse(localStorage.getItem("levelDetailsState")) || {};
 
+    const title = state.title ?? "Default Title";
+    const text = state.text ?? "No Text Available";
+
+
+    console.log(state)
+
+    // Bread Crumb Details
     const items = [
         { label: "الرئيسية", href: "/" },
-        { label: title }
+        {
+            label: title,
+            href: "/stage_details",
+            state: { title: title }
+        },
+        { label: text }
     ];
 
-    const levels = [
-        {id: 1, text: "الصف الأول", color: "blue" },
-        {id: 2, text: "الصف الثاني", color: "yellow" },
-        {id: 3, text: "الصف الثالث", color: "orange" },
-        {id: 4, text: "الصف الرابع", color: "blue" },
-        {id: 5, text: "الصف الخامس", color: "yellow" },
-        {id: 6, text: "الصف السادس", color: "orange" }
+    const subs = [
+        {id: 1, text: "اللغه العربية", color: "blue" },
+        {id: 2, text: "الرياضيات", color: "yellow" },
+        {id: 3, text: "العلوم", color: "orange" },
     ];
 
-     console.log(title)
     const handleCardClick = (level) => {
         const newState = {
             id: level.id,
@@ -35,26 +43,27 @@ function StageDetails() {
         // Store in localStorage to persist state if lost
         localStorage.setItem("levelDetailsState", JSON.stringify(newState));
 
-        navigate('/level_details', { state: newState });
+        navigate('/sub_details', { state: newState });
     };
 
     return (
         <>
-            <Breadcrumb items={items} />
-            <BannerCard imageSrc="/stage1.png" imageAlt="Stage 1" />
+            <Breadcrumb items={items}/>
+
+            <BannerCard imageSrc="/stage1.png" imageAlt="Stage 1"/>
 
             <div className="flex flex-col gap-4 px-6">
                 <h2 className="text-2xl font-bold py-4">
                     اختر الصف
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mb-10">
-                    {levels.map((level, index) => (
+                    {subs.map((sub, index) => (
                         <Card
                             key={index}
-                            color={level.color}
-                            text={level.text}
-                            number={level.id}
-                            onClick={() => handleCardClick(level)}
+                            color={sub.color}
+                            text={sub.text}
+                            number={sub.id}
+                            onClick={() => handleCardClick(sub)}
                         />
                     ))}
                 </div>
@@ -63,4 +72,4 @@ function StageDetails() {
     );
 }
 
-export default StageDetails;
+export default LevelDetails;

@@ -8,6 +8,7 @@ import SkillDetails from "./pages/SkillDetails/SkillDetails.jsx";
 import Downloads from "./pages/Downloads/Downloads.jsx";
 import NotFound from "./pages/NotFound/NotFound.jsx";
 import StageDetails from "./pages/StageDetails/StageDetails.jsx";
+import LevelDetails from "./pages/LevelDetails/LevelDetails.jsx";
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
                 { path: '/skill_details', element: <SkillDetails /> },
                 { path: '/downloads', element: <Downloads /> },
                 { path: '/stage_details', element: <StageDetails /> },
+                { path: '/level_details', element: <LevelDetails /> },
                 { path: "*", element: <NotFound /> },
             ],
         },
