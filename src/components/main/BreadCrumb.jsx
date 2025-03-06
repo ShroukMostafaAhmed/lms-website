@@ -1,6 +1,17 @@
-import React from "react";
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Breadcrumb = ({ items }) => {
+    const navigate = useNavigate();
+
+    const handleClick = (item, e) => {
+        if (item.href && item.state) {
+            e.preventDefault();
+            console.log('Breadcrumb navigation:', item.href, item.state);
+            navigate(item.href, { state: item.state });
+        }
+    };
+
     return (
         <nav dir="rtl" className="text-xl font-bold my-4 px-6 lg:px-12">
             <ul className="flex space-x-1 rtl:space-x-reverse">
@@ -10,9 +21,16 @@ const Breadcrumb = ({ items }) => {
                         {index === items.length - 1 ? (
                             <span className="text-gray-800">{item.label}</span>
                         ) : (
-                            <a href={item.href} className="text-blue-500 hover:text-blue-700">
-                                {item.label}
-                            </a>
+                            item.href && (
+                                <Link
+                                    to={item.href}
+                                    state={item.state}
+                                    className="text-blue-500 hover:text-blue-700"
+                                    onClick={(e) => handleClick(item, e)}
+                                >
+                                    {item.label}
+                                </Link>
+                            )
                         )}
                     </li>
                 ))}
@@ -21,4 +39,4 @@ const Breadcrumb = ({ items }) => {
     );
 };
 
-export default Breadcrumb
+export default Breadcrumb;
