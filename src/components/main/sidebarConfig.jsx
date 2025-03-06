@@ -30,7 +30,7 @@ export const sidebarConfig = [
         path: "/exams",
         icon: <PiExamThin/>,
         subcategories: [],
-        key: "exams" // <-- Fixed duplicate key issue
+        key: "exams"
     },
     {
         title: "المهارات",
@@ -39,18 +39,4 @@ export const sidebarConfig = [
         subcategories: [],
         key: "skills"
     },
-    {
-        title: "الباقات",
-        path: "/packages",
-        icon: <Package />,
-        subcategories: [],
-        key: "packages" // <-- Changed from "extensions" to "packages" for better clarity
-    },
-    {
-        title: "الإعدادات",
-        path: "/settings",
-        icon: <Settings />,
-        subcategories: [],
-        key: "settings"
-    }
 ];

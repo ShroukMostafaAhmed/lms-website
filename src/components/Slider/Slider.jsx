@@ -19,7 +19,7 @@ const Slider = ({products}) => {
             grabCursor={true} // Enables drag-scroll
             slidesPerView="auto" // Multiple cards visible
             spaceBetween={10} // ✅ Reduce space between slides
-            className="w-full flex justify-center items-center"
+            className="w-screen flex justify-center items-center"
         >
             {products.map((product) => (
                 <SwiperSlide

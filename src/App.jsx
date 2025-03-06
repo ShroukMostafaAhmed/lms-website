@@ -6,6 +6,7 @@ import Login from "./pages/Login/Login.jsx";
 import Register from "./pages/Register/Register.jsx";
 import SkillDetails from "./pages/SkillDetails/SkillDetails.jsx";
 import Downloads from "./pages/Downloads/Downloads.jsx";
+import NotFound from "./pages/NotFound/NotFound.jsx";
 
 function App() {
 
@@ -15,11 +16,12 @@ function App() {
             path: "/",
             element: <AppLayout/>,
             children: [
-                { index: true, element: <Home/>},
-                {path: '/login', element: <Login />},
-                {path: '/register', element: <Register />},
-                {path: '/skill_details', element: <SkillDetails />},
-                {path: '/downloads', element: <Downloads />},
+                { index: true, element: <Home/> },
+                { path: '/login', element: <Login /> },
+                { path: '/register', element: <Register /> },
+                { path: '/skill_details', element: <SkillDetails /> },
+                { path: '/downloads', element: <Downloads /> },
+                { path: "*", element: <NotFound /> },
             ],
         },
     ])

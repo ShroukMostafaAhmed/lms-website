@@ -27,7 +27,7 @@ function Home() {
     ]
 
     return (
-        <div dir="rtl">
+        <div dir="rtl" className="w-full">
             <div className="my-6">
                 <Slider products={products}/>
             </div>
