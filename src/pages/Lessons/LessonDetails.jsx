@@ -22,9 +22,9 @@ function LessonDetails() {
     ]
 
     const videos = [
-        { id: 1, img: "/video1.jpg", title: "Video 1", desc: "Description for Video 1", href: "video_details" },
-        { id: 2, img: "/video2.jpg", title: "Video 2", desc: "Description for Video 2", href: "video_details" },
-        { id: 3, img: "/video3.jpg", title: "Video 3" , desc: "Description for Video 3", href: "video_details" },
+        { id: 1, img: "/video1.jpg", title: "Video 1", desc: "Description for Video 1", href: "/video_details" },
+        { id: 2, img: "/video2.jpg", title: "Video 2", desc: "Description for Video 2", href: "/video_details" },
+        { id: 3, img: "/video3.jpg", title: "Video 3" , desc: "Description for Video 3", href: "/video_details" },
     ]
 
     return (
