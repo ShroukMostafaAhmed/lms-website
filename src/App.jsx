@@ -12,6 +12,7 @@ import LevelDetails from "./pages/LevelDetails/LevelDetails.jsx";
 import Lessons from "./pages/Lessons/Lessons.jsx";
 import LessonDetails from "./pages/Lessons/LessonDetails.jsx";
 import VideoDetails from "./pages/Lessons/VideoDetails.jsx";
+import Settings from "./pages/Settings/Settings.jsx";
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
                 { path: '/lessons', element: <Lessons /> },
                 { path: '/lesson_details', element: <LessonDetails /> },
                 { path: '/video_details', element: <VideoDetails /> },
+                { path: '/settings', element: <Settings /> },
                 { path: "*", element: <NotFound /> },
             ],
         },

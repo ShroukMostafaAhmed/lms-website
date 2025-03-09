@@ -35,7 +35,7 @@ export const sidebarConfig = [
     {
         title: "الاعدادات",
         path: "/settings",
-        icon: <Settings />,
+        icon: <Command />,
         subcategories: [],
         key: "settings"
     },
