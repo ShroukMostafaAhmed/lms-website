@@ -1,10 +1,9 @@
 import React from "react";
 import clsx from "clsx";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const Card = ({ number, text, color, title }) => {
-    // use Navigate
-    const navigate = useNavigate()
+const Card = ({ key, href ,number, text, color, title }) => {
+    const navigate = useNavigate();
 
     return (
         <div
@@ -14,11 +13,11 @@ const Card = ({ number, text, color, title }) => {
                 color === "yellow" && "bg-yellow-400",
                 color === "orange" && "bg-orange-500"
             )}
-            onClick={() => navigate('/level_details', {state: {id: number, title: title, text: text}})}
+            onClick={() => navigate(`${href}`, { state: { id: key, title: title, text: text } })}
         >
             <div className="flex flex-col h-28 justify-center items-center p-4">
                 <div className="w-20 h-20 flex items-center justify-center bg-white rounded-full font-bold text-lg">
-                    {number}
+                    {typeof number === 'string' ? number : number}
                 </div>
             </div>
             <div

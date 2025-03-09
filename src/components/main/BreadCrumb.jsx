@@ -5,10 +5,10 @@ const Breadcrumb = ({ items }) => {
     const navigate = useNavigate();
 
     const handleClick = (item, e) => {
-        if (item.href && item.state) {
+        if (item.href) {
             e.preventDefault();
             console.log('Breadcrumb navigation:', item.href, item.state);
-            navigate(item.href, { state: item.state });
+            navigate(item.href, { state: item.state || {} });
         }
     };
 
@@ -21,16 +21,14 @@ const Breadcrumb = ({ items }) => {
                         {index === items.length - 1 ? (
                             <span className="text-gray-800">{item.label}</span>
                         ) : (
-                            item.href && (
-                                <Link
-                                    to={item.href}
-                                    state={item.state}
-                                    className="text-blue-500 hover:text-blue-700"
-                                    onClick={(e) => handleClick(item, e)}
-                                >
-                                    {item.label}
-                                </Link>
-                            )
+                            <Link
+                                to={item.href}
+                                state={item.state}
+                                className="text-blue-500 hover:text-blue-700"
+                                onClick={(e) => handleClick(item, e)}
+                            >
+                                {item.label}
+                            </Link>
                         )}
                     </li>
                 ))}
