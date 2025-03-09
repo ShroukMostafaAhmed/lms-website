@@ -21,9 +21,9 @@ function Home() {
     ]
 
     const videos = [
-        { id: 1, img: "/video1.jpg", title: "Video 1", desc: "Description for Video 1" },
-        { id: 2, img: "/video2.jpg", title: "Video 2", desc: "Description for Video 2" },
-        { id: 3, img: "/video3.jpg", title: "Video 3" , desc: "Description for Video 3" },
+        { id: 1, img: "/video1.jpg", title: "Video 1", desc: "Description for Video 1", href: "skill_details" },
+        { id: 2, img: "/video2.jpg", title: "Video 2", desc: "Description for Video 2", href: "skill_details" },
+        { id: 3, img: "/video3.jpg", title: "Video 3" , desc: "Description for Video 3", href: "skill_details" },
     ]
 
     return (
@@ -53,7 +53,7 @@ function Home() {
                     <h2 className="text-2xl font-bold text-black px-4">
                         المهارات المتنوعة
                     </h2>
-                    <div className="flex flex-wrap items-center mt-6 gap-4 mx-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center mt-6 gap-4 mx-4 max-w-7xl">
                         {videos && videos.map((video) => (
                             <VideoCard key={video.id} video={video}/>
                         ))}

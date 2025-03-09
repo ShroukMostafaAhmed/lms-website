@@ -2,7 +2,7 @@ import React from 'react';
 
 function DetailsCard({icon, title, description, teacherName = null}) {
     return (
-        <div className="max-w-5xl p-5 rounded-2xl bg-white">
+        <div className="max-w-5xl w-full p-6 rounded-2xl bg-white">
             <div className="flex flex-row justify-between items-center gap-4">
                 {/* Avatar (Placeholder) */}
                 <div className="flex flex-row gap-4">
@@ -16,7 +16,7 @@ function DetailsCard({icon, title, description, teacherName = null}) {
                 {/* Title & Name */}
                 {teacherName != null && (
                     <div>
-                        <a href="#" className="text-blue-500 font-medium">
+                        <a href="#" className="text-blue-500 font-medium text-xl">
                             {teacherName}
                         </a>
                     </div>
