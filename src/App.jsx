@@ -9,6 +9,7 @@ import Downloads from "./pages/Downloads/Downloads.jsx";
 import NotFound from "./pages/NotFound/NotFound.jsx";
 import StageDetails from "./pages/StageDetails/StageDetails.jsx";
 import LevelDetails from "./pages/LevelDetails/LevelDetails.jsx";
+import Lessons from "./pages/Lessons/Lessons.jsx";
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
                 { path: '/downloads', element: <Downloads /> },
                 { path: '/stage_details', element: <StageDetails /> },
                 { path: '/level_details', element: <LevelDetails /> },
+                { path: '/lessons', element: <Lessons /> },
                 { path: "*", element: <NotFound /> },
             ],
         },

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Breadcrumb from "../../components/main/BreadCrumb.jsx";
 import BannerCard from "../../components/Cards/BannerCard.jsx";
@@ -7,7 +7,20 @@ import Card from "../../components/Cards/Card.jsx";
 function StageDetails() {
     const location = useLocation();
     const navigate = useNavigate();
-    const state = location.state || {};
+
+    const [state, setState] = useState(() => {
+        const savedState = localStorage.getItem("stageDetailsState");
+        return location.state || (savedState ? JSON.parse(savedState) : {});
+    });
+
+    useEffect(() => {
+        if (state) {
+            console.log("Setting state in localStorage:", state);
+            localStorage.setItem("stageDetailsState", JSON.stringify(state));
+        }
+        console.log(state)
+    }, [state]);
+
     const title = state.title ?? "Default Title";
 
     const items = [
@@ -16,25 +29,22 @@ function StageDetails() {
     ];
 
     const levels = [
-        {id: 1, text: "الصف الأول", color: "blue" },
-        {id: 2, text: "الصف الثاني", color: "yellow" },
-        {id: 3, text: "الصف الثالث", color: "orange" },
-        {id: 4, text: "الصف الرابع", color: "blue" },
-        {id: 5, text: "الصف الخامس", color: "yellow" },
-        {id: 6, text: "الصف السادس", color: "orange" }
+        { id: 1, text: "الصف الأول", color: "blue" },
+        { id: 2, text: "الصف الثاني", color: "yellow" },
+        { id: 3, text: "الصف الثالث", color: "orange" },
+        { id: 4, text: "الصف الرابع", color: "blue" },
+        { id: 5, text: "الصف الخامس", color: "yellow" },
+        { id: 6, text: "الصف السادس", color: "orange" }
     ];
 
-     console.log(title)
     const handleCardClick = (level) => {
         const newState = {
             id: level.id,
-            title: title,
+            title: state.title,
             text: level.text
         };
 
-        // Store in localStorage to persist state if lost
-        localStorage.setItem("levelDetailsState", JSON.stringify(newState));
-
+        setState(newState);
         navigate('/level_details', { state: newState });
     };
 
@@ -48,9 +58,10 @@ function StageDetails() {
                     اختر الصف
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mb-10">
-                    {levels.map((level, index) => (
+                    {levels.map((level) => (
                         <Card
-                            key={index}
+                            key={level.id}
+                            href={"/level_details"}
                             color={level.color}
                             text={level.text}
                             number={level.id}

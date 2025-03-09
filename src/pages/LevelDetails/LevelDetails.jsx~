@@ -70,7 +70,6 @@ function LevelDetails() {
                     {subs.map((sub) => (
                         <Card
                             key={sub.id}
-                            href={"/lessons"}
                             color={sub.color}
                             text={sub.text}
                             number={sub.image}
