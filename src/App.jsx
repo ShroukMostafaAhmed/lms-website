@@ -10,6 +10,8 @@ import NotFound from "./pages/NotFound/NotFound.jsx";
 import StageDetails from "./pages/StageDetails/StageDetails.jsx";
 import LevelDetails from "./pages/LevelDetails/LevelDetails.jsx";
 import Lessons from "./pages/Lessons/Lessons.jsx";
+import LessonDetails from "./pages/Lessons/LessonDetails.jsx";
+import VideoDetails from "./pages/Lessons/VideoDetails.jsx";
 
 function App() {
 
@@ -27,6 +29,8 @@ function App() {
                 { path: '/stage_details', element: <StageDetails /> },
                 { path: '/level_details', element: <LevelDetails /> },
                 { path: '/lessons', element: <Lessons /> },
+                { path: '/lesson_details', element: <LessonDetails /> },
+                { path: '/video_details', element: <VideoDetails /> },
                 { path: "*", element: <NotFound /> },
             ],
         },
