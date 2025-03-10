@@ -1,7 +1,7 @@
 import React from "react";
-import {Command, Folder, Package, Settings, Grid2x2, DownloadIcon} from "lucide-react";
-import {PiExamThin, PiStudentFill} from "react-icons/pi";
-import {GiTeacher} from "react-icons/gi";
+import {Settings, Grid2x2, DownloadIcon, Calendar} from "lucide-react";
+import { GiTeacher} from "react-icons/gi";
+import {GoPerson} from "react-icons/go";
 
 export const sidebarConfig = [
     {
@@ -19,18 +19,11 @@ export const sidebarConfig = [
         key: "students"
     },
     {
-        title: "المدرسين",
-        path: "/teachers",
-        icon: <GiTeacher />,
+        title: "التقويم",
+        path: "/calendar",
+        icon: <Calendar />,
         subcategories: [],
-        key: "teachers"
-    },
-    {
-        title: "الاختبارات",
-        path: "/exams",
-        icon: <PiExamThin/>,
-        subcategories: [],
-        key: "exams"
+        key: "calendar"
     },
     {
         title: "الاعدادات",
@@ -38,5 +31,12 @@ export const sidebarConfig = [
         icon: <Settings />,
         subcategories: [],
         key: "settings"
+    },
+    {
+        title: "الملف الشخصى",
+        path: "/profile",
+        icon: <GoPerson/>,
+        subcategories: [],
+        key: "exams"
     },
 ];

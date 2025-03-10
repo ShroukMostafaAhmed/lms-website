@@ -13,6 +13,8 @@ import Lessons from "./pages/Lessons/Lessons.jsx";
 import LessonDetails from "./pages/Lessons/LessonDetails.jsx";
 import VideoDetails from "./pages/Lessons/VideoDetails.jsx";
 import Settings from "./pages/Settings/Settings.jsx";
+import Profile from "./pages/Profile/Profile.jsx";
+import Calendar from "./pages/Calendar/Calendar.jsx";
 
 function App() {
 
@@ -33,6 +35,8 @@ function App() {
                 { path: '/lesson_details', element: <LessonDetails /> },
                 { path: '/video_details', element: <VideoDetails /> },
                 { path: '/settings', element: <Settings /> },
+                { path: '/profile', element: <Profile /> },
+                { path: '/calendar', element: <Calendar /> },
                 { path: "*", element: <NotFound /> },
             ],
         },
