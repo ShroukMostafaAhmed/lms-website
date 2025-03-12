@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from "../../components/Cards/Card.jsx";
+import BarCharts from "../../components/Charts/BarCharts.jsx";
 
 const data = [
     { day: 'الأحد', value: 34, color: 'bg-blue-500' },
@@ -54,7 +55,7 @@ const Profile = () => {
 
             <div className="px-6">
                 <h2 className="text-3xl font-bold py-4"> التقويم اليومى</h2>
-                <img src="/commingsoon.jpeg" alt="comming soon" className="w-full"/>
+                <BarCharts/>
             </div>
         </>
     );
