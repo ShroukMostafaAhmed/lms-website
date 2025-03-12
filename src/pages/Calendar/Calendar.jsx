@@ -65,8 +65,9 @@ function Calendar() {
     const handleAddEvent = () => {
         Swal.fire({
             title: 'اضافة موعد',
+            color: '#4a90e2',
             html: `
-            <div style="display: flex; flex-direction: column; width: 100%; gap: 20px; align-items: flex-start; direction: rtl;">
+            <div style="display: flex; flex-direction: column; width: 100%; min-height: 200px; gap: 30px; align-items: flex-start; direction: rtl;">
                 <div style="display: flex; width: 100%; gap: 10px;">
                     <select id="select-day" class="swal-select">
                         <option value="" disabled selected>اختر اليوم</option>
