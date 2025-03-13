@@ -264,7 +264,7 @@ function CalendarComponent() {
                 {/* Month/Year Selector */}
                 <div className="flex items-center relative">
                     <div
-                        className="text-lg cursor-pointer p-2 md:p-4 border border-blue-300 rounded-xl text-blue-500 flex items-center gap-2 md:gap-5"
+                        className="text-sm cursor-pointer p-2 md:p-3 border border-blue-300 rounded-xl text-blue-500 flex items-center gap-2 md:gap-5"
                         onClick={() => setShowDatePicker(!showDatePicker)}
                     >
                         <span className="ml-1 hidden md:block">▼</span>
