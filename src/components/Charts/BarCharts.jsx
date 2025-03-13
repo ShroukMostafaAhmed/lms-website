@@ -1,20 +1,20 @@
 import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 const data = [
-    { name: 'الأحد', value: 34 },
-    { name: 'الإثنين', value: 45 },
-    { name: 'الثلاثاء', value: 40 },
-    { name: 'الأربعاء', value: 10 },
-    { name: 'الخميس', value: 37 },
-    { name: 'الجمعة', value: 39 },
     { name: 'السبت', value: 50 },
+    { name: 'الجمعة', value: 39 },
+    { name: 'الخميس', value: 37 },
+    { name: 'الأربعاء', value: 10 },
+    { name: 'الثلاثاء', value: 40 },
+    { name: 'الإثنين', value: 45 },
+    { name: 'الأحد', value: 34 },
 ];
 
 const BarCharts = () => {
     return (
         <div className="w-full max-w-6xl mt-10  p-6 rounded-xl">
-            <ResponsiveContainer width="100%" height={550}>
-                <BarChart data={data} barGap={8}> {/* Reduced barGap */}
+            <ResponsiveContainer width="100%" height={450}>
+                <BarChart data={data} barGap={6}> {/* Reduced barGap */}
                     {/* X Axis */}
                     <XAxis
                         dataKey="name"
@@ -35,7 +35,7 @@ const BarCharts = () => {
                         cursor={{ fill: 'transparent' }}
                     />
                     {/* Bars */}
-                    <Bar dataKey="value" radius={[28, 28, 28, 28]} barSize={90}> {/* Adjusted barSize */}
+                    <Bar dataKey="value" radius={[28, 28, 28, 28]} barSize={60}> {/* Adjusted barSize */}
                         {data.map((entry, index) => (
                             <Cell
                                 key={`cell-${index}`}

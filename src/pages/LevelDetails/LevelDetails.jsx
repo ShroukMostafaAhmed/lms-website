@@ -65,7 +65,7 @@ function LevelDetails() {
             <BannerCard imageSrc="/stage1.png" imageAlt="Stage 1" />
 
             <div className="flex flex-col gap-4 px-6">
-                <h2 className="text-2xl font-bold py-4">اختر الصف</h2>
+                <h2 className="text-2xl font-bold py-4">اختر الماده</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mb-10">
                     {subs.map((sub) => (
                         <Card

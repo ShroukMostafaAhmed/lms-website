@@ -15,6 +15,7 @@ import VideoDetails from "./pages/Lessons/VideoDetails.jsx";
 import Settings from "./pages/Settings/Settings.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
 import Calendar from "./pages/Calendar/Calendar.jsx";
+import Exam from "./pages/Exam/Exam.jsx";
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
                 { path: '/settings', element: <Settings /> },
                 { path: '/profile', element: <Profile /> },
                 { path: '/calendar', element: <Calendar /> },
+                { path: '/exam', element: <Exam /> },
                 { path: "*", element: <NotFound /> },
             ],
         },
