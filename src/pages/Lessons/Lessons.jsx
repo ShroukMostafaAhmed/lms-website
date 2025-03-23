@@ -2,8 +2,12 @@ import React from 'react';
 import Breadcrumb from "../../components/main/BreadCrumb.jsx";
 import BannerCard from "../../components/Cards/BannerCard.jsx";
 import Card from "../../components/Cards/Card.jsx";
+import {useNavigate} from "react-router-dom";
 
 function Lessons() {
+    // use navigate
+    const navigate = useNavigate();
+
     // Bread Crumb Items
     const items = [
         { label: "الرئيسية", href: "/" },
@@ -15,6 +19,12 @@ function Lessons() {
         { id: 2, text: "الدرس الثاني", color: "yellow", image: <img src='lesson2.png' alt='lesson2' className='w-8 h-8' /> },
         { id: 3, text: "الدرس الثالث", color: "orange", image: <img src='lesson1.png' alt='lesson1' className='w-8 h-8' /> }
     ];
+
+    const handleCardClick = (lesson) => {
+        // Handle card click logic here
+        console.log('Card clicked:', lesson);
+        navigate('/lesson_details');
+    };
 
     return (
         <>
@@ -28,10 +38,12 @@ function Lessons() {
                     {lessons && lessons.map((lesson) => (
                         <Card
                             key={lesson.id}
+                            id={lesson.id}
                             number={lesson.image}
                             text={lesson.text}
                             color={lesson.color}
                             title={lesson.title}
+                            onClick={() => handleCardClick(lesson)}
                             href="/lesson_details"
                         />
                     ))}
