@@ -42,7 +42,6 @@ const Profile = () => {
                     {lessons.map((lesson) => (
                         <Card
                             key={lesson.id}
-                            id={lesson.id}
                             href={"/lessons"}
                             color={lesson.color}
                             text={lesson.text}

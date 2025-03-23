@@ -58,6 +58,7 @@ function LessonDetails() {
                     {attachments.map((sub) => (
                         <Card
                             key={sub.id}
+                            id={sub.id}
                             href={"/lessons"}
                             color={sub.color}
                             text={sub.text}

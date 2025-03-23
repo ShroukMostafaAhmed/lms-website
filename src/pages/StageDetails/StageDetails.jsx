@@ -7,6 +7,7 @@ import Card from "../../components/Cards/Card.jsx";
 function StageDetails() {
     const location = useLocation();
     const navigate = useNavigate();
+    const [items, setItems] = useState([]);
 
     const [state, setState] = useState(() => {
         const savedState = localStorage.getItem("stageDetailsState");
@@ -19,14 +20,12 @@ function StageDetails() {
             localStorage.setItem("stageDetailsState", JSON.stringify(state));
         }
         console.log(state)
+        setItems([
+            { label: "الرئيسية", href: "/" },
+            { label: state.title }
+        ]);
     }, [state]);
 
-    const title = state.title ?? "Default Title";
-
-    const items = [
-        { label: "الرئيسية", href: "/" },
-        { label: title }
-    ];
 
     const levels = [
         { id: 1, text: "الصف الأول", color: "blue" },
@@ -43,9 +42,10 @@ function StageDetails() {
             title: state.title,
             text: level.text
         };
+        console.log("minaminamina", newState)
 
         setState(newState);
-        navigate('/level_details', { state: newState });
+        navigate('/level_details', { state: newState })
     };
 
     return (
@@ -53,7 +53,7 @@ function StageDetails() {
             <Breadcrumb items={items} />
             <BannerCard imageSrc="/stage1.png" imageAlt="Stage 1" />
 
-            <div className="flex flex-col gap-4 px-6">
+            <div className="flex flex-col gap-y-4 px-6">
                 <h2 className="text-2xl font-bold py-4">
                     اختر الصف
                 </h2>
@@ -61,6 +61,7 @@ function StageDetails() {
                     {levels.map((level) => (
                         <Card
                             key={level.id}
+                            id={level.id}
                             href={"/level_details"}
                             color={level.color}
                             text={level.text}

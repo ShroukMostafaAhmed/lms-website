@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
 
-const Card = ({ key, href ,number, text, color, title, desc = null }) => {
+const Card = ({id, href ,number, text, onClick, color, title, desc = null }) => {
     const navigate = useNavigate();
 
     return (
@@ -14,7 +14,7 @@ const Card = ({ key, href ,number, text, color, title, desc = null }) => {
                 color === "orange" && "bg-orange-500",
                 color === "red" && "bg-red-500",
             )}
-            onClick={() => navigate(`${href}`, { state: { id: key, title: title, text: text } })}
+            onClick={() => onClick({id, href, number, text, color, title, desc})}
         >
             <div className="flex flex-col h-32 justify-center items-center p-4">
                 <div className="w-20 h-20 flex items-center justify-center bg-white rounded-full font-bold text-lg">
