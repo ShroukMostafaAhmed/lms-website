@@ -61,7 +61,7 @@ function Sidebar() {
                 </div>
 
                 <Link to="/" className="text-center my-12">
-                    <img src="/logo.png" alt="Logo" className="w-32 mx-auto" />
+                    <img src="/logo.png" alt="Logo" className="w-[45%] mx-auto" />
                 </Link>
 
                 <ul className="space-y-14 mx-auto">

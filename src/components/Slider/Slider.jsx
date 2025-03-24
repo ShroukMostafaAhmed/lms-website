@@ -30,7 +30,7 @@ const Slider = ({products}) => {
                         <img
                             src={product.image}
                             alt={product.title}
-                            className="rounded-lg w-full h-auto object-cover"
+                            className="rounded-lg w-[87%] lg:w-full h-auto object-cover"
                         />
                     </div>
                 </SwiperSlide>

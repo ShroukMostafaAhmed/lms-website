@@ -4,41 +4,50 @@ import { PlayCircle, Trash2, CheckCircle, Clock1 } from 'lucide-react';
 
 export default function LessonsSlider({ lessons }) {
     return (
-        <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">دروسك / الرياضيات</h2>
+        <div className="p-4 space-y-4">
+            <h2 className="text-xl font-bold">دروسك / الرياضيات</h2>
             <Swiper
                 spaceBetween={10}
+                slidesPerView={1.28} // Slightly more than 1 to show a peek of next card
                 breakpoints={{
-                    1024: { slidesPerView: 3, spaceBetween: 20 },
-                    640: { slidesPerView: 2, spaceBetween: 15 },
-                    0: { slidesPerView: 1, spaceBetween: 10 }
+                    640: {
+                        slidesPerView: 2,
+                        spaceBetween: 15,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 20,
+                    }
                 }}
-                className="overflow-hidden"
                 centeredSlides={false}
-                slidesPerView={'auto'}
+                watchSlidesProgress={true}
+                slideToClickedSlide={true}
+                className="overflow-visible" // Changed to visible to allow card shadows to show
             >
                 {lessons.map((lesson) => (
-                    <SwiperSlide key={lesson.id} className="max-w-[90%] sm:max-w-[80%] lg:max-w-[30%]">
-                        <div className="relative bg-white shadow-lg rounded-lg overflow-hidden mx-auto">
+                    <SwiperSlide key={lesson.id}>
+                        <div className="relative bg-white shadow-lg rounded-lg overflow-hidden mx-auto w-[85%] sm:w-full md:w-full lg:w-full max-w-[320px] sm:max-w-none">
                             <div className="relative">
-                                <img src={lesson.image} alt="Lesson" className="w-full h-fit object-cover" />
+                                <img src={lesson.image} alt="Lesson" className="w-full h-[120px] sm:h-[190px] object-cover" />
                                 <button className="absolute top-2 left-2 bg-red-500 p-1 rounded-full">
-                                    <Trash2 size={18} color="white" />
+                                    <Trash2 size={16} color="white" />
                                 </button>
                                 <button className="absolute inset-0 flex items-center justify-center">
-                                    <PlayCircle size={50} className="text-white" />
+                                    <PlayCircle size={40} className="text-white opacity-90" />
                                 </button>
                             </div>
-                            <div className="p-3 text-right flex flex-col gap-2 sm:gap-4">
-                                <h3 className="text-blue-500 font-normal text-[12px] sm:text-[14px] lg:text-[20px]">{lesson.title}</h3>
-                                <p className="font-normal text-[12px] sm:text-[14px] lg:text-[20px]">{lesson.description}</p>
-                                <p className="text-xs sm:text-sm text-blue-400 flex items-center gap-2 sm:gap-3"><Clock1/> {lesson.duration}</p>
+                            <div className="p-3 text-right flex flex-col gap-1 sm:gap-2">
+                                <h3 className="text-blue-500 font-medium text-sm sm:text-base lg:text-lg">{lesson.title}</h3>
+                                <p className="font-normal text-xs sm:text-sm text-gray-600 line-clamp-2">{lesson.description}</p>
+                                <p className="text-xs text-blue-400 flex items-center gap-1 sm:gap-2">
+                                    <Clock1 size={14} /> {lesson.duration}
+                                </p>
                             </div>
                             <div className="p-2 flex justify-end">
                                 {lesson.completed ? (
-                                    <img src="/true2.png" alt="true2" className={"w-4 h-4"}/>
+                                    <img src="/true2.png" alt="true2" className="w-4 h-4" />
                                 ) : (
-                                    <CheckCircle className="text-gray-400" size={18} />
+                                    <CheckCircle className="text-gray-400" size={16} />
                                 )}
                             </div>
                         </div>
