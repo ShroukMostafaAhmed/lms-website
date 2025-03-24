@@ -32,7 +32,7 @@ function Home() {
                 <Slider products={products}/>
             </div>
 
-            <div className="my-6">
+            <div className="my-6 space-y-4">
                 <h2 className="text-2xl font-bold text-black px-4">
                     المراحل التعليمية
                 </h2>
@@ -43,19 +43,19 @@ function Home() {
                         </div>
                     ))}
                 </div>
-                <div dir="rtl" className="my-6">
+                <div dir="rtl">
                     <h2 className="text-2xl font-bold text-black px-4">
                         التقويم الأسبوعي
                     </h2>
                     <WeeklyCalendar/>
                 </div>
-                <div dir="rtl" className="my-6">
+                <div dir="rtl">
                     <h2 className="text-2xl font-bold text-black px-4">
                         المهارات المتنوعة
                     </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center mt-6 gap-4 mx-4 max-w-7xl">
+                    <div className="flex flex-wrap gap-6 mt-6 mx-4 max-w-5xl">
                         {videos && videos.map((video) => (
-                            <VideoCard key={video.id} video={video}/>
+                            <VideoCard key={video.id} video={video} />
                         ))}
                     </div>
                 </div>

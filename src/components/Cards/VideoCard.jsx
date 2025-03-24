@@ -1,24 +1,23 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default function VideoCard({video}) {
-    // use Navigate
-    const navigate = useNavigate()
+export default function VideoCard({ video }) {
+    const navigate = useNavigate();
 
     return (
         <div
-            className="w-full hover:scale-103 transition-all duration-300 ease-in-out rounded-lg shadow-lg overflow-hidden cursor-pointer"
-            onClick={() => navigate(`${video.href}` , {state: {id: video.id, title: video.title}})}
+            className="w-[80%] md:w-[46%] lg:w-[24%] xl:w-[30%] hover:scale-105 transition-transform duration-300 ease-in-out rounded-lg shadow-lg overflow-hidden cursor-pointer"
+            onClick={() => navigate(`${video.href}`, { state: { id: video.id, title: video.title } })}
         >
             {/* Image Container with Play Button Overlay */}
             <div className="relative">
                 <img
                     src={video.img}
                     alt="Video Thumbnail"
-                    className="w-full h-48 object-cover"
+                    className="w-full aspect-video object-cover"
                 />
                 {/* Play Button Overlay */}
                 <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
-                    <button className="bg-white p-4 rounded-full shadow-lg">
+                    <button className="bg-white p-3 rounded-full shadow-lg">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -38,9 +37,9 @@ export default function VideoCard({video}) {
             </div>
 
             {/* Text Content */}
-            <div className="p-4 text-right">
-                <h3 className="text-lg font-semibold">{video.title} </h3>
-                <p className="text-gray-600 text-sm">{video.desc}</p>
+            <div className="p-4">
+                <h3 className="text-lg font-semibold truncate">{video.title}</h3>
+                <p className="text-gray-600 text-sm mt-1 line-clamp-2">{video.desc}</p>
             </div>
         </div>
     );
