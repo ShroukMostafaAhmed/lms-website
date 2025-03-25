@@ -41,7 +41,7 @@ function App() {
                 { path: '/calendar', element: <Calendar /> },
                 { path: '/exam', children: [
                     { index: true, element: <Exam /> },
-                    { path: 'reviews', element: <ExamReviews /> },
+                    { path: 'exam_reviews', element: <ExamReviews /> },
                 ]},
                 { path: "*", element: <NotFound /> },
             ],

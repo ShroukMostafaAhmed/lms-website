@@ -14,7 +14,7 @@ const Breadcrumb = ({ items }) => {
 
     return (
         <nav dir="rtl" className="text-xl font-bold my-4 px-6 lg:px-12">
-            <ul className="flex space-x-1 rtl:space-x-reverse">
+            <ul className="flex space-x-4 ">
                 {items.map((item, index) => (
                     <li key={index} className="flex items-center">
                         {index !== 0 && <span className="mx-1 text-blue-500">/</span>}
