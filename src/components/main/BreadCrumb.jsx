@@ -7,14 +7,13 @@ const Breadcrumb = ({ items }) => {
     const handleClick = (item, e) => {
         if (item.href) {
             e.preventDefault();
-            console.log('Breadcrumb navigation:', item.href, item.state);
             navigate(item.href, { state: item.state || {} });
         }
     };
 
     return (
-        <nav dir="rtl" className="text-xl font-bold my-4 px-6 lg:px-12">
-            <ul className="flex space-x-4 ">
+        <nav dir="rtl" className="text-base sm:text-lg md:text-xl font-bold my-2 px-4 sm:px-6 md:px-12">
+            <ul className="flex flex-wrap items-center gap-1 sm:gap-2 md:gap-4">
                 {items.map((item, index) => (
                     <li key={index} className="flex items-center">
                         {index !== 0 && <span className="mx-1 text-blue-500">/</span>}
