@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Pagination from '../main/Pagination.jsx';
 import Swal from 'sweetalert2';
 
@@ -10,29 +10,36 @@ const questions = [
             'تحديد اتجاه التيار المستخدم في السلك',
             'تحديد اتجاه المجال الناتج عن مرور تيار في سلك',
             'لا يوجد إجابة صحيحة'
-        ]
+        ],
+        correctAnswer: 'تحديد اتجاه حركة السلك',
+        selectedAnswer: 'تحديد اتجاه حركة السلك' // For review mode
     },
     {
         question: 'ما هو العنصر الأساسي في الدائرة الكهربائية؟',
-        options: ['المقاومة', 'الملف', 'المكثف', 'المفتاح']
+        options: ['المقاومة', 'الملف', 'المكثف', 'المفتاح'],
+        correctAnswer: 'المقاومة',
+        selectedAnswer: 'المكثف'
     },
     {
         question: 'أي من التالي يُعد وحدة قياس التيار الكهربائي؟',
-        options: ['الأمبير', 'الأوم', 'الفولت', 'الواط']
+        options: ['الأمبير', 'الأوم', 'الفولت', 'الواط'],
+        correctAnswer: 'الأمبير',
+        selectedAnswer: null
     }
 ];
 
-const Quiz = () => {
+const Quiz = ({mode = 'exam'}) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [selectedOption, setSelectedOption] = useState(null);
+    const [selectedOption, setSelectedOption] = useState(
+        mode === 'review' ? questions[currentPage - 1].selectedAnswer : null
+    );
 
     const handleOptionChange = (option) => {
-        setSelectedOption(option);
+        if (mode === 'exam') setSelectedOption(option);
     };
 
     const handleNextOrEnd = () => {
         if (currentPage === questions.length) {
-            // Show SweetAlert on last question
             Swal.fire({
                 icon: 'warning',
                 title: 'هل تريد إنهاء الأختبار ؟',
@@ -52,16 +59,17 @@ const Quiz = () => {
             });
         } else {
             setCurrentPage(currentPage + 1);
-            setSelectedOption(null);
+            setSelectedOption(mode === 'review' ? questions[currentPage].selectedAnswer : null);
         }
     };
 
     return (
-        <div className="max-w-6xl p-4 mx-3 lg:mx-7">
+        <div className="w-[90%] p-4 mx-3 lg:mx-7">
             <div className="bg-gray-100 rounded-xl p-6 shadow-lg">
                 {/* Question Title */}
                 <div className="flex justify-start items-center gap-4 mb-4">
-                    <button className="text-gray-700 text-lg border-3 rounded-lg w-6 h-6 flex items-center justify-center font-bold">
+                    <button
+                        className="text-gray-700 text-lg border-3 rounded-lg w-6 h-6 flex items-center justify-center font-bold">
                         ?
                     </button>
                     <h2 className="font-semibold text-lg">
@@ -73,38 +81,55 @@ const Quiz = () => {
                 {questions[currentPage - 1].options.map((option, index) => (
                     <label
                         key={index}
-                        className={`block p-3 border rounded-md cursor-pointer mb-2 ${
-                            selectedOption === option
-                                ? 'bg-blue-100 border-blue-500'
-                                : 'bg-white border-gray-300 hover:bg-gray-100'
+                        className={`flex items-center gap-3 p-3 border rounded-md cursor-pointer mb-2 
+            ${
+                            mode === 'review'
+                                ? option === questions[currentPage - 1].correctAnswer
+                                    ? 'bg-green-200 border-green-500'
+                                    : option === questions[currentPage - 1].selectedAnswer
+                                        ? 'bg-red-100 border-red-500'
+                                        : 'bg-white border-gray-300'
+                                : selectedOption === option
+                                    ? 'bg-blue-100 border-blue-500'
+                                    : 'bg-white border-gray-300 hover:bg-gray-100'
                         }`}
                     >
+                        {/* Radio Input Positioned at the Start */}
                         <input
                             type="radio"
                             name="option"
                             value={option}
-                            className="hidden"
+                            className={`w-5 h-5 cursor-pointer ${mode === 'review' ? 'text-green-400' : ''}`}
                             onChange={() => handleOptionChange(option)}
                             checked={selectedOption === option}
+                            disabled={mode === 'review'}
                         />
-                        {option}
+                        {/* Option Text */}
+                        <span>{option}</span>
                     </label>
                 ))}
 
                 {/* Next or End Button */}
-                <button
-                    onClick={handleNextOrEnd}
-                    className={`w-full py-2 text-white rounded-md mt-4 bg-blue-500 hover:bg-blue-600 cursor-pointer`}
-                >
-                    {currentPage === questions.length ? 'إنهاء' : 'التالي'}
-                </button>
+                {mode === 'exam' && (
+                    <button
+                        onClick={handleNextOrEnd}
+                        className={`w-full py-2 text-white rounded-md mt-4 bg-blue-500 hover:bg-blue-600 cursor-pointer`}
+                    >
+                        {currentPage === questions.length ? 'إنهاء' : 'التالي'}
+                    </button>
+                )}
             </div>
 
             {/* Pagination */}
             <Pagination
                 totalQuestions={questions.length}
                 currentPage={currentPage}
-                onPageChange={setCurrentPage}
+                onPageChange={(page) => {
+                    setCurrentPage(page);
+                    setSelectedOption(
+                        mode === 'review' ? questions[page - 1].selectedAnswer : null
+                    );
+                }}
             />
         </div>
     );

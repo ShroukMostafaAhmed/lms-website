@@ -17,6 +17,7 @@ import Profile from "./pages/Profile/Profile.jsx";
 import Calendar from "./pages/Calendar/Calendar.jsx";
 import Exam from "./pages/Exam/Exam.jsx";
 import ExamReviews from "./pages/Exam/ExamReviews.jsx";
+import ExamResults from "./pages/Exam/ExamResults.jsx";
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
                 { path: '/exam', children: [
                     { index: true, element: <Exam /> },
                     { path: 'reviews', element: <ExamReviews /> },
+                    { path: 'review_solutions', element: <ExamResults /> },
                 ]},
                 { path: "*", element: <NotFound /> },
             ],
