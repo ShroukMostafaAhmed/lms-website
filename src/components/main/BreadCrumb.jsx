@@ -11,6 +11,7 @@ const Breadcrumb = ({ items }) => {
         }
     };
 
+
     return (
         <nav dir="rtl" className="text-base sm:text-lg md:text-xl font-bold my-2 px-4 sm:px-6 md:px-12">
             <ul className="flex flex-wrap items-center gap-1 sm:gap-2 md:gap-4">
