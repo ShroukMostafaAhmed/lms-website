@@ -15,7 +15,7 @@ function Downloads() {
     return (
         <div className="flex flex-col w-full">
             {/* Banner container with fixed styling */}
-            <div className="w-full pl-12 sm:pl-12 md:pl-8 lg:pl-6 md:max-w-4xl xl:max-w-7xl">
+            <div className="w-full pl-12 sm:pl-12 md:pl-8 lg:pl-6 max-w-2xl md:max-w-4xl xl:max-w-7xl">
                 <BannerCard
                     imageSrc="/OnlineLearningCourseLandscapeBanner1.png"
                     imageAlt="Online Learning Course Landscape Banner 1"
