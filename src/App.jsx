@@ -1,5 +1,6 @@
 import './App.css'
-import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
+import { useState, useEffect } from "react";
 import AppLayout from "./AppLayout.jsx";
 import Home from "./pages/Home/Home.jsx";
 import Login from "./pages/Login/Login.jsx";
@@ -20,43 +21,60 @@ import ExamReviews from "./pages/Exam/ExamReviews.jsx";
 import ExamResults from "./pages/Exam/ExamResults.jsx";
 
 function App() {
+  const [token, setToken] = useState(localStorage.getItem("Token"));
 
-    // Preparing Routing Version 6
-    const routes = createBrowserRouter([
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setToken(localStorage.getItem("Token"));
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
+  const routes = createBrowserRouter([
+    {
+      path: "/",
+      element: token ? <AppLayout /> : <Navigate to="/login" replace />,
+      children: [
+        { index: true, element: <Home /> },
+        { path: 'skill_details/:id', element: <SkillDetails /> },
+        { path: 'downloads', element: <Downloads /> },
+        { path: 'stage_details/:id', element: <StageDetails /> },
+        { path: 'level_details/:id', element: <LevelDetails /> },
+        { path: 'lessons', element: <Lessons /> },
+        { path: 'lesson_details/:id', element: <LessonDetails /> },
+        { path: 'video_details', element: <VideoDetails /> },
+        { path: 'settings', element: <Settings /> },
+        { path: 'profile', element: <Profile /> },
+        { path: 'calendar', element: <Calendar /> },
         {
-            path: "/",
-            element: <AppLayout/>,
-            children: [
-                { index: true, element: <Home/> },
-                { path: '/login', element: <Login /> },
-                { path: '/register', element: <Register /> },
-                { path: '/skill_details', element: <SkillDetails /> },
-                { path: '/downloads', element: <Downloads /> },
-                { path: '/stage_details', element: <StageDetails /> },
-                { path: '/level_details', element: <LevelDetails /> },
-                { path: '/lessons', element: <Lessons /> },
-                { path: '/lesson_details', element: <LessonDetails /> },
-                { path: '/video_details', element: <VideoDetails /> },
-                { path: '/settings', element: <Settings /> },
-                { path: '/profile', element: <Profile /> },
-                { path: '/calendar', element: <Calendar /> },
-                { path: '/exam', children: [
-                    { index: true, element: <Exam /> },
-                    { path: 'reviews', element: <ExamReviews /> },
-                    { path: 'review_solutions', element: <ExamResults /> },
-                ]},
-                { path: "*", element: <NotFound /> },
-            ],
+          path: 'exam',
+          children: [
+            { index: true, element: <Exam /> },
+            { path: 'reviews', element: <ExamReviews /> },
+            { path: 'review_solutions', element: <ExamResults /> },
+          ]
         },
-    ])
+        { path: "*", element: <NotFound /> },
+      ],
+    },
+    {
+      path: "/login",
+      element: token ? <Navigate to="/" replace /> : <Login />,
+    },
+    {
+      path: "/register",
+      element: token ? <Navigate to="/" replace /> : <Register />,
+    }
+  ]);
 
-    return (
-        <>
-            <RouterProvider router={routes}>
-                <AppLayout/>
-            </RouterProvider>
-        </>
-    )
+  return (
+    <>
+      <RouterProvider router={routes}>
+        <AppLayout />
+      </RouterProvider>
+    </>
+  )
 }
 
-export default App
+export default App;

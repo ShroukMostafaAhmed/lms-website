@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { Play, Pause, Maximize, Volume2 } from "lucide-react";
 import {formatTime} from "../../utils/FormatTime.js";
 
-export default function VideoPlayer() {
+export default function VideoPlayer({videoUrl}) {
     const videoRef = useRef(null);
     const [playing, setPlaying] = useState(false);
     const [progress, setProgress] = useState(0);
@@ -33,11 +33,15 @@ export default function VideoPlayer() {
             <video
                 ref={videoRef}
                 className="w-full"
-                autoPlay={true}
-                src="https://www.w3schools.com/html/mov_bbb.mp4"
+                autoPlay
+                src={videoUrl || "https://www.w3schools.com/html/mov_bbb.mp4"}
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedMetadata={handleLoadedMetadata}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                onError={() => console.error("Failed to load video:", videoUrl)}
             ></video>
+
 
             {/* Controls */}
             <div dir="ltr" className="absolute bottom-0 left-0 w-full p-3 flex items-center justify-between flex-row">

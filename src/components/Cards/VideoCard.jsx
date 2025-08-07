@@ -5,41 +5,34 @@ export default function VideoCard({ video }) {
 
     return (
         <div
-            className="w-[80%] md:w-[46%] lg:w-[24%] xl:w-[30%] hover:scale-105 transition-transform duration-300 ease-in-out rounded-lg shadow-lg overflow-hidden cursor-pointer"
+            className="w-full sm:w-[90%] md:w-[80%] lg:w-[60%] xl:w-[45%] 2xl:w-[350px] hover:scale-105 transition-transform duration-300 ease-in-out rounded-xl shadow-lg shadow-blue-200 overflow-hidden cursor-pointer"
             onClick={() => navigate(`${video.href}`, { state: { id: video.id, title: video.title } })}
         >
-            {/* Image Container with Play Button Overlay */}
+            {/* صورة الفيديو وزر التشغيل */}
             <div className="relative">
-                <img
-                    src={video.img}
-                    alt="Video Thumbnail"
-                    className="w-full aspect-video object-cover"
-                />
-                {/* Play Button Overlay */}
-                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
-                    <button className="bg-white p-3 rounded-full shadow-lg">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={2}
-                            stroke="currentColor"
-                            className="w-8 h-8 text-gray-700"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M5 3l14 9-14 9V3z"
-                            />
-                        </svg>
+               <img
+  src="public/10893325 1.png" // ← ضع المسار الصحيح للصورة في مجلد public
+  alt={video.title}
+  className="w-full aspect-video object-cover opicity-20"
+/>
+
+
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <button className="bg-white  rounded-full shadow-lg">
+                        <img 
+  src="/public/icon.png" 
+  alt="Play Icon" 
+  className="w-15 h-15"
+/>
+
                     </button>
                 </div>
             </div>
 
-            {/* Text Content */}
-            <div className="p-4">
-                <h3 className="text-lg font-semibold truncate">{video.title}</h3>
-                <p className="text-gray-600 text-sm mt-1 line-clamp-2">{video.desc}</p>
+            {/* عنوان ووصف الفيديو */}
+            <div className="p-4 bg-white">
+                <h3 className="text-lg font-bold text-gray-900 truncate">{video.title}</h3>
+                <p className="text-gray-600 text-sm mt-2 line-clamp-2">{video.desc}</p>
             </div>
         </div>
     );

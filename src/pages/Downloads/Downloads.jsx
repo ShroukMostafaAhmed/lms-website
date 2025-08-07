@@ -13,17 +13,19 @@ function Downloads() {
     ];
 
     return (
-        <div className="flex flex-col w-full">
-            {/* Banner container with fixed styling */}
-            <div className="w-full pl-12 sm:pl-12 md:pl-8 lg:pl-6 max-w-2xl md:max-w-4xl xl:max-w-7xl">
-                <BannerCard
-                    imageSrc="/OnlineLearningCourseLandscapeBanner1.png"
-                    imageAlt="Online Learning Course Landscape Banner 1"
-                />
+        <div className="flex flex-col w-full" dir="rtl">
+            {/* Banner container - Responsive padding */}
+            <div className="w-full flex justify-center items-center px-4 sm:px-6 md:px-10">
+                <div className="w-full max-w-screen-2xl">
+                    <BannerCard
+                        imageSrc="/OnlineLearningCourseLandscapeBanner1.png"
+                        imageAlt="Online Learning Course Landscape Banner 1"
+                    />
+                </div>
             </div>
 
-            {/* Slider container with separate styling */}
-            <div className="w-full">
+            {/* Slider container - Responsive padding */}
+            <div className="flex flex-col w-full px-4 sm:px-6 md:px-12 lg:px-20 xl:px-35 pt-6 sm:pt-10">
                 <LessonsSlider lessons={lessons}/>
             </div>
         </div>

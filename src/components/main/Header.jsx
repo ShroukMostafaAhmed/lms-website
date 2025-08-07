@@ -1,105 +1,188 @@
-import React, { useState } from "react";
-import { GoArrowUpLeft } from "react-icons/go";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Search, X } from "lucide-react";
+import { LogOut, User, Menu } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Header = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [query, setQuery] = useState("");
-    const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
-    const handleScroll = (id) => {
-        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-        setIsMenuOpen(!isMenuOpen);
+  const isLoggedIn = location.pathname !== "/login" && location.pathname !== "/register";
+  const userImage = localStorage.getItem("userImage");
+
+  const handleLogout = () => {
+    localStorage.removeItem("Token");
+    localStorage.removeItem("validTo");
+    localStorage.removeItem("userImage");
+    window.location.href = "/login";
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+        setIsMobileMenuOpen(false);
+      }
     };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-    return (
-        <header className={`flex items-center max-w-screen-xl mr-0 lg:w-[80%] md:w-[70%] sm:w-[60%] w-[50%] justify-between ${(location.pathname === "/login" || location.pathname === "/register") ? "px-4 md:px-3 lg:px-12" : ""} pt-2 bg-white relative`}>
-            <div dir="rtl" className={`flex items-center justify-between w-full ${(location.pathname === "/login" || location.pathname === "/register") ? "px-4 md:px-3 lg:px-12 rounded-full" : "px-4"} py-2`}>
+  return (
+    <header className="w-full bg-white z-50">
+      <div
+        className="w-full flex flex-row justify-between items-center lg:justify-between py-5 px-6 shadow-2xl shadow-blue-100  border-blue-100 relative"
+        dir="rtl"
+        style={{ minHeight: "120px" }}
+      >
+        {/* ☰ زر القائمة - في اليمين على الموبايل */}
+        {isLoggedIn && (
+          <div className="lg:hidden order-1 lg:order-3">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="text-blue-600 p-2 rounded-md hover:bg-blue-100 transition"
+            >
+              <Menu className="w-7 h-7" />
+            </button>
 
-                {/* Logo */}
-                {(location.pathname === "/login" || location.pathname === "/register") && (
-                    <div className="order-2 lg:order-1" onClick={() => navigate("/")}>
-                        <img src="/logo.png" alt="Adrees Logo" className="h-10 w-10 lg:h-16 lg:w-16 cursor-pointer" />
+            <AnimatePresence>
+              {isMobileMenuOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute right-0 mt-3 z-50 w-52 bg-white rounded-lg shadow-xl border border-gray-200"
+                >
+                  <div className="py-2 text-right">
+                    <button
+                      onClick={() => {
+                        navigate("/");
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className={`block w-full px-4 py-3 text-right transition-colors ${
+                        location.pathname === "/" ? "text-blue-600 font-bold" : "text-gray-700 hover:text-blue-600"
+                      }`}
+                    >
+                      الصفحة الرئيسية
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        navigate("/downloads");
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className={`block w-full px-4 py-3 text-right transition-colors ${
+                        location.pathname === "/downloads" ? "text-blue-600 font-bold" : "text-gray-700 hover:text-blue-600"
+                      }`}
+                    >
+                      التنزيلات
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        navigate("/calendar");
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className={`block w-full px-4 py-3 text-right transition-colors ${
+                        location.pathname === "/calendar" ? "text-blue-600 font-bold" : "text-gray-700 hover:text-blue-600"
+                      }`}
+                    >
+                      التقويم
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        navigate("/settings");
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className={`block w-full px-4 py-3 text-right transition-colors ${
+                        location.pathname === "/settings" ? "text-blue-600 font-bold" : "text-gray-700 hover:text-blue-600"
+                      }`}
+                    >
+                      الإعدادات
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
+
+        {/* 🖼 اللوجو في المنتصف على الموبايل */}
+        <div className="absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0 order-2 lg:order-1 flex items-center gap-2 mr-35">
+          <img
+            src="/logo.png"
+            alt="Adrees Logo"
+            className="h-20 w-18 cursor-pointer"
+            onClick={() => navigate("/")}
+          />
+        </div>
+
+        {/* 🔗 روابط التنقل - تظهر فقط في الشاشات الكبيرة */}
+        {isLoggedIn && (
+          <nav className="hidden lg:flex gap-20 text-[#001F3F] font-medium text-[20px] order-3 lg:order-2">
+            <button onClick={() => navigate("/")} className={`hover:text-blue-600 ${location.pathname === "/" ? "text-blue-600 font-bold" : ""}`}>الصفحة الرئيسية</button>
+            <button onClick={() => navigate("/downloads")} className={`hover:text-blue-600 ${location.pathname === "/downloads" ? "text-blue-600 font-bold" : ""}`}>التنزيلات</button>
+            <button onClick={() => navigate("/calendar")} className={`hover:text-blue-600 ${location.pathname === "/calendar" ? "text-blue-600 font-bold" : ""}`}>التقويم</button>
+            <button onClick={() => navigate("/settings")} className={`hover:text-blue-600 ${location.pathname === "/settings" ? "text-blue-600 font-bold" : ""}`}>الباقات</button>
+          </nav>
+        )}
+
+        {/* 👤 أيقونة البروفايل - يسار على الموبايل */}
+        {isLoggedIn && (
+          <div className="relative order-3 lg:order-2 mr-auto lg:mr-0 lg:ml-35" ref={dropdownRef}>
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="w-12 h-12 rounded-full hover:bg-blue-200 transition-all flex items-center justify-center border-2 border-blue-300 hover:border-blue-300"
+            >
+              {userImage ? (
+                <img
+                  src={userImage}
+                  alt="User Avatar"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+              ) : (
+                <User className="text-blue-600 w-6 h-6" />
+              )}
+            </button>
+
+            <AnimatePresence>
+              {isDropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute left-0 mt-3 z-50 w-48 bg-white rounded-lg shadow-xl border border-gray-200"
+                >
+                  <div className="absolute -top-2 left-4 w-4 h-4 bg-white rotate-45 border-l border-t border-gray-200"></div>
+
+                  <div className="py-2">
+                    <div onClick={() => { navigate("/profile"); setIsDropdownOpen(false); }} className="flex items-center gap-3 px-4 py-3 cursor-pointer text-gray-700 hover:text-blue-600 transition-colors">
+                      <User className="w-5 h-5" />
+                      <span className="font-medium">الملف الشخصي</span>
                     </div>
-                )}
 
-                {(location.pathname !== "/login" && location.pathname !== "/register") && (
-                    <h2 className="font-bold text-[18px] lg:text-[32px] leading-[44.8px] text-[#001F3F]">الرئيسية</h2>
-                )}
+                    <hr className="border-gray-100 my-1" />
 
-                {/* Search Section */}
-                {(location.pathname !== "/login" && location.pathname !== "/register") && (
-                    <div className="relative">
-                        {/* Search Icon - Only on Small Screens */}
-                        {!isSearchOpen && (
-                            <button onClick={() => setIsSearchOpen(true)} className="md:hidden text-gray-600">
-                                <Search size={24} />
-                            </button>
-                        )}
-
-                        {/* Search Bar - Only on Small Screens When Open */}
-                        {isSearchOpen && (
-                            <div className="relative right-10 top-0 w-[160px] flex items-center bg-white border border-gray-300 rounded-full p-2 shadow-md md:hidden">
-                                <input
-                                    type="text"
-                                    value={query}
-                                    onChange={(e) => setQuery(e.target.value)}
-                                    placeholder="ابحث..."
-                                    className="w-full bg-transparent text-right focus:outline-none"
-                                />
-                                <button onClick={() => setIsSearchOpen(false)} className="text-gray-600 ml-2">
-                                    <X size={20} />
-                                </button>
-                            </div>
-                        )}
-
-                        {/* Search Bar - Always Visible on Medium & Large Screens */}
-                        {!isSearchOpen && (
-                            <div className="hidden md:block relative w-fit">
-                                <input
-                                    type="text"
-                                    value={query}
-                                    onChange={(e) => setQuery(e.target.value)}
-                                    placeholder="ابحث"
-                                    className="w-full rounded-full border border-gray-300 bg-gray-100 px-4 py-2 pr-10 text-right text-gray-700 focus:border-blue-500 focus:bg-white focus:outline-none"
-                                />
-                                <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                            </div>
-                        )}
+                    <div onClick={() => { handleLogout(); setIsDropdownOpen(false); }} className="flex items-center gap-3 px-4 py-3 cursor-pointer text-gray-700 hover:text-red-600 transition-colors">
+                      <LogOut className="w-5 h-5" />
+                      <span className="font-medium">تسجيل الخروج</span>
                     </div>
-                )}
-
-                {/* Navigation - Only on Large Screens */}
-                {(location.pathname === "/login" || location.pathname === "/register") && (
-                    <nav dir="rtl" className="order-2 hidden lg:flex items-center space-x-8 text-gray-700">
-                        <button onClick={() => navigate("/")} className="font-normal text-[16px] leading-[22.4px] text-[#001F3F] cursor-pointer">الرئيسية</button>
-                        <button onClick={() => handleScroll("whyUs")} className="font-normal text-[16px] leading-[22.4px] text-[#001F3F] cursor-pointer">لماذا نحن</button>
-                        <button onClick={() => handleScroll("education")} className="font-normal text-[16px] leading-[22.4px] text-[#001F3F] cursor-pointer">المراحل</button>
-                        <button onClick={() => handleScroll("subs")} className="font-normal text-[16px] leading-[22.4px] text-[#001F3F] cursor-pointer">الباقات</button>
-                    </nav>
-                )}
-
-                {/* Buttons - Only on Login/Register Pages */}
-                {(location.pathname === "/login" || location.pathname === "/register") && (
-                    <div dir="rtl" className="order-3 lg:order-3 flex items-center space-x-2 lg:space-x-8">
-                        <button onClick={() => navigate("/login")} className="py-1 px-2 lg:py-2 lg:px-4 text-xs lg:text-base bg-white hover:bg-blue-500 text-blue-500 hover:text-white border border-[#1E78EB] rounded-full flex items-center cursor-pointer">
-                            <span>تسجيل دخول</span>
-                            <GoArrowUpLeft className="ml-1 h-3 w-3 lg:h-4 lg:w-4" />
-                        </button>
-
-                        <button onClick={() => navigate("/register")} className="py-1 px-2 lg:py-2 lg:px-4 text-xs lg:text-base bg-blue-500 hover:bg-white hover:text-blue-500 border border-[#1E78EB] text-white rounded-full flex items-center cursor-pointer">
-                            <span>إنشاء حساب</span>
-                            <GoArrowUpLeft className="ml-1 h-3 w-3 lg:h-4 lg:w-4" />
-                        </button>
-                    </div>
-                )}
-            </div>
-        </header>
-    );
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
+      </div>
+    </header>
+  );
 };
 
 export default Header;

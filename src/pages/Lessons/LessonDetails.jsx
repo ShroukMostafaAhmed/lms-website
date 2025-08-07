@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useLocation } from "react-router-dom"; // ✅ هنا
 import Breadcrumb from "../../components/main/BreadCrumb.jsx";
 import BannerCard from "../../components/Cards/BannerCard.jsx";
 import DetailsCard from "../../components/Cards/DetailsCard.jsx";
@@ -6,7 +7,9 @@ import Card from "../../components/Cards/Card.jsx";
 import VideoCard from "../../components/Cards/VideoCard.jsx";
 
 function LessonDetails() {
-    // bread crumb items
+    const location = useLocation();
+    const state = location.state || {}; // ✅ تعريف الـ state المستلم
+
     const items = [
         { label: "الرئيسية", href: "/" },
         { label: "الصف الاول", href: "/stage_details" },
@@ -15,37 +18,45 @@ function LessonDetails() {
         { label: "الدرس الاول", href: "/lesson_details" }
     ];
 
-    // attachments items
-    const attachments =[
-        { id: 1, title: "الملفات المرفقة", href: "#" , color: "blue", image: <img src='lesson1.png' alt='litter' className='w-8 h-8' />, text: "كراسة التلميذ"},
-        { id: 2, title: "ملف جديد", href: "#" , color: "blue", image: <img src='lesson1.png' alt='litter' className='w-8 h-8' />, text: "كتاب التلميذ"},
-    ]
+    const attachments = [
+        { id: 1, title: "الملفات المرفقة", href: "#", color: "blue", image: <img src='lesson1.png' alt='litter' className='w-8 h-8' />, text: "كراسة التلميذ" },
+        { id: 2, title: "ملف جديد", href: "#", color: "blue", image: <img src='lesson1.png' alt='litter' className='w-8 h-8' />, text: "كتاب التلميذ" },
+    ];
 
     const videos = [
         { id: 1, img: "/video1.jpg", title: "Video 1", desc: "Description for Video 1", href: "/video_details" },
         { id: 2, img: "/video2.jpg", title: "Video 2", desc: "Description for Video 2", href: "/video_details" },
-        { id: 3, img: "/video3.jpg", title: "Video 3" , desc: "Description for Video 3", href: "/video_details" },
-    ]
+        { id: 3, img: "/video3.jpg", title: "Video 3", desc: "Description for Video 3", href: "/video_details" },
+    ];
+
+    const handleCardClick = (sub) => {
+        console.log('Attachment clicked:', sub);
+    }
 
     return (
         <>
             <Breadcrumb items={items} />
 
-            <BannerCard imageSrc="lesson1banner.png" imageAlt="lesson1banner" />
+            <BannerCard
+                imageSrc="/stage1.png"
+                imageAlt="Stage Banner"
+                title={state.title} 
+            />
 
             <div dir="rtl">
                 <DetailsCard
                     title="شرح الدرس"
                     icon="lesson-icon.png"
-                    description="المجموعات هي تجمــيــعـات من العناصر تُستخدم لترتيب الأشياء. مثلاً، يمكن أن تكون مـجـمـوعــة مـن الأعـداد أو الأشكال. أمثلة على المجموعات: مجموعة الأعداد: (1, 2, 3) ومجموعة الأشكال: (دائرة، مربع، مثلث)"
+                    description="المجموعات هي تجمــيــعـات من العناصر..."
                 />
             </div>
+
             <div dir="rtl">
                 <DetailsCard
                     title="المدرس"
                     icon="profile-icon.png"
                     teacherName="الأستاذ / فوزي مفتاح"
-                    description="الأسـتـاذ فــوزي مــفــتـاح هـو أسـتـاذ لـمـادة الـريــاضيــات، تحمل بكالوريوس في الرياضيات ودبــلـوم فـي تـكـنـولوجيا الـتعـلـيـم. لـديـه أكـثر من 5 سنـوات من الـخـبرة في تدريس الـريـاضـيـات عـــبر الإنـترنــت، حـيث تـطور محـتوى تـعـلــيــمي تفاعلي يـشمل فيديوهـات وألـعــاب تـعـلـيـمـيـة. تستهدف الفئات العمرية من الأول الابتدائي حتى الـتعـاشر الــثــانـوي "
+                    description="الأسـتـاذ فــوزي مــفــتـاح هـو أسـتاذ لـمـادة الـريــاضيــات..."
                 />
             </div>
 

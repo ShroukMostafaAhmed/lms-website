@@ -3,76 +3,93 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Breadcrumb from "../../components/main/BreadCrumb.jsx";
 import BannerCard from "../../components/Cards/BannerCard.jsx";
 import Card from "../../components/Cards/Card.jsx";
+import useGetLevelsByStageId from "../../hooks/useLevels/useGetLevelsByStageId.jsx";
+// import useGetStageById from "../../hooks/useStages/useGetStageById.js";
+
+import { useParams } from "react-router-dom";
+import LevelsCard from '../../components/LevelsCard.jsx';
 
 function StageDetails() {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const [items, setItems] = useState([]);
+  const { id } = useParams(); // Get the ID from the URL
+  const { levels, loading, error, getLevelsByStageId } = useGetLevelsByStageId();
+  //const { levels, loading, error, getLevelsByStageId } = useGetStageById();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [items, setItems] = useState([]);
 
-    const [state, setState] = useState(() => {
-        const savedState = localStorage.getItem("stageDetailsState");
-        return location.state || (savedState ? JSON.parse(savedState) : {});
-    });
+  const [state] = useState(() => {
+    const savedState = localStorage.getItem("stageDetailsState");
+    return location.state || (savedState ? JSON.parse(savedState) : {});
+  });
 
-    useEffect(() => {
-        if (state) {
-            console.log("Setting state in localStorage:", state);
-            localStorage.setItem("stageDetailsState", JSON.stringify(state));
-        }
-        console.log(state)
-        setItems([
-            { label: "الرئيسية", href: "/" },
-            { label: state.title }
-        ]);
-    }, [state]);
+  useEffect(() => {
+    getLevelsByStageId(id);
+  }, [id, getLevelsByStageId]);
 
+  useEffect(() => {
+    if (state) {
+      localStorage.setItem("stageDetailsState", JSON.stringify(state));
+      setItems([
+        { label: "الرئيسية", href: "/" },
+        { label: state.title }
+      ]);
+    }
+  }, [state]);
 
-    const levels = [
-        { id: 1, text: "الصف الأول", color: "blue" },
-        { id: 2, text: "الصف الثاني", color: "yellow" },
-        { id: 3, text: "الصف الثالث", color: "orange" },
-        { id: 4, text: "الصف الرابع", color: "blue" },
-        { id: 5, text: "الصف الخامس", color: "yellow" },
-        { id: 6, text: "الصف السادس", color: "orange" }
-    ];
-
-    const handleCardClick = (level) => {
-        const newState = {
-            id: level.id,
-            title: state.title,
-            text: level.text
-        };
-        console.log("minaminamina", newState)
-
-        setState(newState);
-        navigate('/level_details', { state: newState })
+  const handleCardClick = (level) => {
+    const newState = {
+      id: level.id,
+      title: state.title,
+      text: level.name,
+      imagePath: level.imagePath,
     };
+    navigate('/level_details/'+level.id, { state: newState });
+  };
 
-    return (
-        <>
-            <Breadcrumb items={items} />
-            <BannerCard imageSrc="/stage1.png" imageAlt="Stage 1" />
+  return (
+    <div dir="rtl">
+      <Breadcrumb items={items} />
+      
+      {/* Banner Section - Responsive container */}
+      <div className="w-full px-4 sm:px-6 md:px-12 lg:px-20 xl:px-35">
+        <BannerCard
+          imageSrc="/stage1.png"
+          imageAlt="Stage Banner"
+          title={state.title}
+        />
+      </div>
 
-            <div className="flex flex-col gap-y-4 px-6">
-                <h2 className="text-2xl font-bold py-4">
-                    اختر الصف
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mb-10">
-                    {levels.map((level) => (
-                        <Card
-                            key={level.id}
-                            id={level.id}
-                            href={"/level_details"}
-                            color={level.color}
-                            text={level.text}
-                            number={level.id}
-                            onClick={() => handleCardClick(level)}
-                        />
-                    ))}
-                </div>
+      {/* Content Section - Responsive padding */}
+      <div className="flex flex-col w-full px-4 sm:px-6 md:px-12 lg:px-20 xl:px-35">
+        <div className="flex flex-col gap-y-3 sm:gap-y-4">
+          <h2 className="text-xl sm:text-2xl font-bold pb-6 sm:pb-8 md:pb-10">
+            الصف الدراسي
+          </h2>
+
+          {loading ? (
+            <p className="text-center py-8">جاري التحميل...</p>
+          ) : error ? (
+            <p className="text-red-600 text-center py-8">حدث خطأ أثناء جلب الصفوف</p>
+          ) : levels && levels.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              {levels.map((level) => (
+                <LevelsCard
+                  key={level.id}
+                  id={level.id}
+                  title={level.title}
+                  image={level.imagePath}
+                  description={level.description}
+                  onClick={() => handleCardClick(level)}
+                />
+              ))}
             </div>
-        </>
-    );
+          ) : (
+            <p className="text-center py-8">لا توجد صفوف للعرض</p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default StageDetails;

@@ -18,19 +18,19 @@ const Slider = ({products}) => {
             loop={true} // Infinite loop
             grabCursor={true} // Enables drag-scroll
             slidesPerView="auto" // Multiple cards visible
-            spaceBetween={10} // ✅ Reduce space between slides
-            className="w-screen flex justify-center items-center"
+            spaceBetween={20} // ✅ Reduced space for mobile
+            className="w-full overflow-hidden" // ✅ Fixed container width
         >
             {products.map((product) => (
                 <SwiperSlide
                     key={product.id}
-                    className="max-w-[750px]" // ✅ Controls slide width
+                    className="max-w-[100%] sm:max-w-[400px] lg:max-w-[800px]" // ✅ Responsive slide width
                 >
-                    <div className="w-full bg-white my-6 rounded-[12px] shadow-amber-50">
+                    <div className="w-full bg-white my-6 rounded-[60px] sm:rounded-[120px] shadow-amber-50">
                         <img
-                            src={product.image}
+                            src={product.imageUrl}
                             alt={product.title}
-                            className="rounded-lg w-[87%] lg:w-full h-auto object-cover"
+                            className="rounded-[50px] sm:rounded-lg w-full h-auto object-cover" // ✅ Consistent width, responsive border radius
                         />
                     </div>
                 </SwiperSlide>

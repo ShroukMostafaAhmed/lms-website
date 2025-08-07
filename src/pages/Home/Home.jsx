@@ -1,67 +1,109 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Slider from "../../components/Slider/Slider.jsx";
 import StageCard from "../../components/Cards/StageCard.jsx";
 import WeeklyCalendar from "../../components/Calendar/WeeklyCalendar.jsx";
 import VideoCard from "../../components/Cards/VideoCard.jsx";
+import useGetHomeData from '../../hooks/useHome/useGetHomeData.js';
+import useGetAllSkills from '../../hooks/useSkills/useGetAllSkills.js';
+import BackgroundShapes from "../../components/BackgroundShapes.jsx";
+import SideImages from "../../components/SideImages.jsx";
 
 function Home() {
-    // fake data for banner slider
-    const products = [
-        { id: 1, image: "/lms banners/b1.png", title: "منتج 1" },
-        { id: 2, image: "/lms banners/b2.png", title: "منتج 2" },
-        { id: 3, image: "/lms banners/b3.png", title: "منتج 3" },
-        { id: 4, image: "/lms banners/b4.png", title: "منتج 4" },
-        { id: 5, image: "/lms banners/b5.png", title: "منتج 5" },
-    ];
+  const { fetchHomeData, data, isLoading, error } = useGetHomeData();
+  const { skills, loading: loadingSkills, error: skillsError } = useGetAllSkills();
 
-    const stages = [
-        { id: 1, image: "http://adros.runasp.net/Images/Banners/bbbde40b-f6b6-442e-95d5-153a418025c4.png", title: "منتج 1" },
-        { id: 2, image: "http://adros.runasp.net/Images/Banners/275bd26d-681e-4858-ba1d-06415380f748.png", title: "منتج 2" },
-        { id: 3, image: "http://adros.runasp.net/Images/Banners/defc234e-b93d-4220-9401-a517a4538eb5.png", title: "منتج 3" },
-    ]
+  useEffect(() => {
+    fetchHomeData();
+  }, []);
 
-    const videos = [
-        { id: 1, img: "/video1.jpg", title: "Video 1", desc: "Description for Video 1", href: "skill_details" },
-        { id: 2, img: "/video2.jpg", title: "Video 2", desc: "Description for Video 2", href: "skill_details" },
-        { id: 3, img: "/video3.jpg", title: "Video 3" , desc: "Description for Video 3", href: "skill_details" },
-    ]
+  useEffect(() => {
+    if (data) {
+      console.log("Home Data Loaded:", data);
+    }
+  }, [data]);
 
-    return (
-        <div dir="rtl" className="w-full">
-            <div className="my-6">
-                <Slider products={products}/>
-            </div>
+  if (isLoading) return <div className="text-center py-10">جاري التحميل...</div>;
+  if (error) return <div className="text-center py-10 text-red-500">حدث خطأ: {error.message}</div>;
 
-            <div className="my-6 space-y-4">
-                <h2 className="text-2xl font-bold text-black px-4">
-                    المراحل التعليمية
-                </h2>
-                <div className="flex flex-wrap items-center mt-6 gap-4 mx-4 ">
-                    {stages.map((stage) => (
-                        <div key={stage.id}>
-                            <StageCard stage={stage} />
-                        </div>
-                    ))}
-                </div>
-                <div dir="rtl">
-                    <h2 className="text-2xl font-bold text-black px-4">
-                        التقويم الأسبوعي
-                    </h2>
-                    <WeeklyCalendar/>
-                </div>
-                <div dir="rtl">
-                    <h2 className="text-2xl font-bold text-black px-4">
-                        المهارات المتنوعة
-                    </h2>
-                    <div className="flex flex-wrap gap-6 mt-6 mx-4 max-w-5xl">
-                        {videos && videos.map((video) => (
-                            <VideoCard key={video.id} video={video} />
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
+  return (
+    <div dir="rtl" className="overflow-x-hidden">
+      {/* ✅ خلفيات و عناصر جانبية - نخفيها في الشاشات الصغيرة */}
+      <div className="hidden sm:block">
+        <BackgroundShapes />
+        <SideImages />
+      </div>
+
+      {/* ✅ البانرات - Fixed container width */}
+      <div className="my-6 pb-8 relative z-10 w-[100%]">
+        <Slider products={data?.banners ?? []} />
+      </div>
+
+      {/* ✅ المحتوى الرئيسي - Better mobile padding and spacing */}
+      <div className="my-4 space-y-6 sm:space-y-10 px-6 sm:px-6 md:px-12 lg:px-20 xl:px-40 relative z-10">
+
+       <section className="container mx-auto px-4">
+  <h2 className="text-xl sm:text-2xl font-bold text-black mb-4 mt-8 text-center sm:text-right">
+    المراحل التعليمية
+  </h2>
+
+  <div>
+    {Array.isArray(data?.stages) && data.stages.length > 0 ? (
+      <StageCard stage={data.stages[0]} />
+    ) : (
+      <div className="text-gray-500">لا توجد مراحل تعليمية متاحة حالياً.</div>
+    )}
+  </div>
+</section>
+
+        {/* ✅ التقويم الأسبوعي */}
+        <section>
+          <h2 className="text-xl sm:text-2xl font-bold text-black mb-4 mt-12 sm:mt-20 text-center sm:text-right pb-5">
+            التقويم الأسبوعي
+          </h2>
+          <WeeklyCalendar
+            calendarData={
+              Array.isArray(data?.calenders)
+                ? data.calenders.map(event => ({
+                    date: event.date,
+                    color: event.color
+                  }))
+                : []
+            }
+          />
+        </section>
+
+        {/* ✅ المهارات المتنوعة */}
+        <section>
+          <h2 className="text-xl sm:text-2xl font-bold text-black mb-4 mt-12 sm:mt-20 text-center sm:text-right">
+            المهارات المتنوعة
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 px-0 max-w-screen-xl">
+            {loadingSkills ? (
+              <div className="px-4 text-gray-500">جاري تحميل المهارات...</div>
+            ) : skillsError ? (
+              <div className="px-4 text-red-500">حدث خطأ أثناء تحميل المهارات</div>
+            ) : skills.length > 0 ? (
+              skills.map((skill) => (
+                <VideoCard
+                  key={skill.id}
+                  video={{
+                    id: skill.id,
+                    img: skill.imageUrl,
+                    title: skill.title,
+                    desc: skill.description,
+                    href: `skill_details/${skill.id}`
+                  }}
+                />
+              ))
+            ) : (
+              <div className="px-4 text-gray-500">لا توجد مهارات حالياً.</div>
+            )}
+          </div>
+        </section>
+
+      </div>
+    </div>
+  );
 }
 
 export default Home;

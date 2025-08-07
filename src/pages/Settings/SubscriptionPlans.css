@@ -1,0 +1,108 @@
+.container-home{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background: #002220;
+    gap: 150px;
+}
+.card{
+    width: 351.74px;
+    height: 608.71px;
+    background: #ffffff;
+    position: relative;
+}
+.trangle{
+    position: absolute;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-left: 30px solid transparent;
+    border-right: 0px solid transparent;
+    border-top: 30px solid #2563EB;
+}
+.header-content{
+    width: 262.57px;
+    height: 70.34px;
+    font-size:  20px;
+    text-align: center;
+    margin-top: 50px;
+    margin-left: -20px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+}
+.base-sub, .extra-sub, .special-sub {
+    position: relative;
+    .trangle{
+        border-left: 20px solid transparent;
+        border-right: 0px solid transparent;
+        border-top: 20px solid white;
+        top: 0;
+    }
+    .trangle-2{
+        position: absolute;
+        left: 0;
+        bottom: -20px;
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 0px solid transparent;
+        border-top: 20px solid #0ab6eb;
+    }
+    p{
+        font-family: 'Anton';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 22px;
+        line-height: 47px;
+        text-align: center;
+    }
+}
+.base-sub{
+    background: #FFD836;
+    p{
+        color: #0A4A85;
+    }
+    .trangle-2{
+        border-top: 20px solid #B6981E;
+    }
+}
+.extra-sub{
+    background: #FF6652;
+    p{
+        color:  #FFFFFF;
+    }
+    .trangle-2{
+        border-top: 20px solid #a54538;
+    }
+}
+.special-sub{
+    background: #1E78EB;
+    p{
+        color: #FFFFFF;
+    }
+    .trangle-2 {
+        border-top: 20px solid #0A4A85;
+    }
+}
+
+.card {
+    background: #ffffff;
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 640px) {
+    .card {
+        width: 100%;
+        max-width: 90%;
+    }
+}
+
+.header-content {
+    text-align: center;
+    padding: 20px;
+    font-size: 20px;
+}
