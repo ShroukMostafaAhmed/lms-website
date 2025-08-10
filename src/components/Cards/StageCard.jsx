@@ -18,7 +18,6 @@ function StageCard({ stage }) {
         lg:h-[300px]
         rounded-3xl
         overflow-hidden
-      
         mx-0
         my-4
         relative

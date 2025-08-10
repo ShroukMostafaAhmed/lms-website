@@ -61,15 +61,9 @@ function Home() {
             التقويم الأسبوعي
           </h2>
           <WeeklyCalendar
-            calendarData={
-              Array.isArray(data?.calenders)
-                ? data.calenders.map(event => ({
-                    date: event.date,
-                    color: event.color
-                  }))
-                : []
-            }
-          />
+  calendarData={Array.isArray(data?.calenders) ? data.calenders : []}
+/>
+
         </section>
 
         {/* ✅ المهارات المتنوعة */}

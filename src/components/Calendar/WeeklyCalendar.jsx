@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { format, addDays, isSameDay, startOfYear, parseISO } from 'date-fns';
 import { ar } from 'date-fns/locale';
+import Swal from 'sweetalert2';
 
 function WeeklyCalendar({ calendarData = [] }) {
   const today = new Date();
@@ -19,6 +20,13 @@ function WeeklyCalendar({ calendarData = [] }) {
   const days = generateDays();
   const dayNames = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
+  // Returns an array of event colors for the given day
+  const getEventColors = (day) => {
+    return calendarData
+      .filter(event => isSameDay(parseISO(event.date), day) && event.color)
+      .map(event => event.color);
+  };
+
   useEffect(() => {
     scrollToToday();
   }, []);
@@ -27,7 +35,7 @@ function WeeklyCalendar({ calendarData = [] }) {
     if (sliderRef.current) {
       const todayIndex = days.findIndex(day => isSameDay(day, today));
       if (todayIndex !== -1) {
-        const todayElement = sliderRef.current.children[todayIndex + 1]; // +1 لو في عنصر وهمي
+        const todayElement = sliderRef.current.children[todayIndex + 1]; 
         if (todayElement) {
           sliderRef.current.scrollTo({
             left: todayElement.offsetLeft - sliderRef.current.offsetWidth / 2 + todayElement.offsetWidth / 2,
@@ -74,12 +82,89 @@ function WeeklyCalendar({ calendarData = [] }) {
       }
     }
   };
+// Show events popup for a specific day
+const showEventsPopup = (day) => {
+  const events = calendarData.filter(event => isSameDay(parseISO(event.date), day));
+  Swal.fire({
+    title: `الأحداث ليوم ${format(day, 'd MMMM yyyy', { locale: ar })}`,
+    html: `
+      <div style="direction: rtl; text-align: right; font-size: 18px; padding: 10px 0; margin-top: 15px;">
+        ${events.map(e => {
+          const parsedDate = parseISO(e.date);
+          const time = format(parsedDate, 'hh:mm a', { locale: ar });
 
-  const getEventColors = (date) => {
-    return calendarData
-      .filter((e) => isSameDay(parseISO(e.date), date))
-      .map((e) => e.color);
-  };
+          return `
+            <div style="
+              margin-bottom: 5px;
+              padding: 25px;
+              border: 1px solid #e5e7eb;
+              border-radius: 8px;
+              background: #f9f9f9;
+            ">
+              <div style="display: flex; align-items: center; margin-bottom: 6px;">
+                <span style="
+                  display: inline-block;
+                  width: 10px;
+                  height: 10px;
+                  border-radius: 50%;
+                  background: ${e.color};
+                  margin-left: 10px;
+                "></span>
+                <strong>الوقت:</strong> ${time}
+              </div>
+              <div>
+                <strong>ملاحظة:</strong> ${e.notes && e.notes.trim() !== '' ? e.notes : '<span style="color:#888">لا توجد ملاحظات</span>'}
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `,
+    confirmButtonText: 'حسنًا',
+    customClass: {
+      popup: 'custom-swal-popup',
+      title: 'custom-swal-title',
+      confirmButton: 'custom-swal-confirm',
+    },
+    buttonsStyling: false,
+    didRender: () => {
+      // ✅ زر التأكيد (حسنًا)
+      const confirmBtn = document.querySelector('.custom-swal-confirm');
+      if (confirmBtn) {
+        confirmBtn.style.backgroundColor = '#2563EB';
+        confirmBtn.style.color = '#fff';
+        confirmBtn.style.padding = '10px 20px';
+        confirmBtn.style.fontSize = '18px';
+        confirmBtn.style.borderRadius = '8px';
+        confirmBtn.style.border = '1px';
+        confirmBtn.style.marginTop = '20px';
+        confirmBtn.style.marginBottom = '40px';
+        confirmBtn.style.cursor = 'pointer';
+        confirmBtn.style.width = '200px';
+        confirmBtn.style.transition = 'background-color 0.2s ease';
+        confirmBtn.onmouseover = () => confirmBtn.style.backgroundColor = '#1d4ed8';
+        confirmBtn.onmouseout = () => confirmBtn.style.backgroundColor = '#2563EB';
+      }
+
+      // ✅ تصميم النافذة نفسها
+      const popup = document.querySelector('.custom-swal-popup');
+      if (popup) {
+        popup.style.width = '600px';
+        popup.style.padding = '15px';
+        popup.style.borderRadius = '20px';
+        
+      }
+
+      // ✅ تنسيق العنوان
+      const title = document.querySelector('.custom-swal-title');
+      if (title) {
+        title.style.marginBottom = '18px';
+        title.style.fontSize = '24px';
+      }
+    }
+  });
+};
+
 
   return (
     <div dir="rtl" className="pt-4">
@@ -108,7 +193,10 @@ function WeeklyCalendar({ calendarData = [] }) {
                   ? 'bg-blue-100 text-black border-blue-100'
                   : 'bg-white hover:bg-gray-100 border-gray-300'
               }`}
-              onClick={() => setSelectedDate(day)}
+              onClick={() => {
+                setSelectedDate(day);
+                showEventsPopup(day);
+              }}
             >
               <span className="text-xs font-semibold">{dayNames[day.getDay()]}</span>
               <span className="text-xl font-bold mt-1">{format(day, 'd')}</span>
