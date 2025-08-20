@@ -6,7 +6,6 @@ import AuthBackground from "../../components/AuthBackground.jsx";
 function Register() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      
       {/* ✅ خلفيات وزخارف الصفحة */}
       <AuthBackground />
 

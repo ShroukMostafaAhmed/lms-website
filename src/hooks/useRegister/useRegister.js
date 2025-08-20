@@ -15,12 +15,14 @@ function useRegister() {
       
       // Ensure the data structure matches what the backend expects
       const payload = {
-        PhoneNumber: data.PhoneNumber,
-        email: data.email || "", // Ensure email is not null/undefined
+        phoneNumber: data.phoneNumber,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        // email: data.email || "", // Ensure email is not null/undefined
         password: data.password,
         confirmPassword: data.confirmPassword,
-        duration: data.duration,
-        plan: data.plan,
+        // duration: data.duration,
+        // plan: data.plan,
       };
 
       const res = await AxiosInstance.post("/api/Auth/Register", payload);

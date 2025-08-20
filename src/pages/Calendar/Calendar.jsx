@@ -20,7 +20,7 @@ function Calendar() {
             {isLoading ? (
                 <p className="text-center text-gray-500 mt-4">جاري تحميل البيانات...</p>
             ) : error ? (
-                <p className="text-center text-red-500 mt-4">حدث خطأ: {error.message}</p>
+                <p className="text-center text-red-500 mt-4">حدث خطأ: {error}</p>
             ) : (
                 <CalendarComponent events={calendarData} />
             )}

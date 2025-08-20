@@ -10,11 +10,7 @@ const Profile = () => {
 
   const isLoggedIn = location.pathname !== "/login" && location.pathname !== "/register";
 
-  // حالات التحديث
-  const [editedName, setEditedName] = useState("");
-  const [savedName, setSavedName] = useState(""); // الاسم المحفوظ
-  const [isEditingName, setIsEditingName] = useState(false);
-  const [isUpdatingName, setIsUpdatingName] = useState(false);
+  // حالات الصورة
   const [isUpdatingPhoto, setIsUpdatingPhoto] = useState(false);
   const [profileImage, setProfileImage] = useState("");
 
@@ -23,7 +19,6 @@ const Profile = () => {
     if (data?.imagePath) {
       setProfileImage(data.imagePath);
     } else {
-      // تعيين الصورة الافتراضية إذا لم تكن هناك صورة من الـ API
       setProfileImage("/Frame 1984078091.png");
     }
   }, [data]);
@@ -34,35 +29,19 @@ const Profile = () => {
 
   const {
     imagePath = "/default-avatar.png",
-    name = "اسم الطالب",
-    level = "غير محدد",
-    viewsCount = 0,
-    downloadsCount = 0,
-    totalStudyTime = "0",
-    dailyAchievements = [],
-    phone = "0123456789"
+    FirstName = "",
+    LastName = "",
+    name = "",
+    Level = "غير محدد",
+    ViewsCount = 0,
+    DownloadsCount = 0,
+    TotalStudyTime = "0",
+    DailyAchievements = [],
+    PhoneNumber = ""
   } = data;
 
-  // تحديث الاسم
-  const handleNameUpdate = async () => {
-    if (!editedName.trim()) {
-      setIsEditingName(false);
-      return;
-    }
-    
-    setIsUpdatingName(true);
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      // حفظ الاسم الجديد وإفراغ الحقل
-      setSavedName(editedName);
-      setEditedName("");
-      setIsEditingName(false);
-    } catch (err) {
-      alert("حدث خطأ أثناء تحديث الاسم");
-    } finally {
-      setIsUpdatingName(false);
-    }
-  };
+  // const displayName = `${FirstName} ${LastName}`.trim() || "اسم الطالب" ;
+  const displayName = name || `${FirstName} ${LastName}`.trim() || "اسم الطالب";
 
   // تحديث الصورة
   const handlePhotoUpdate = async (event) => {
@@ -71,14 +50,14 @@ const Profile = () => {
 
     setIsUpdatingPhoto(true);
     try {
-      // إنشاء URL مؤقت لعرض الصورة الجديدة
       const imageUrl = URL.createObjectURL(file);
       setProfileImage(imageUrl);
-      
+
+      // TODO: رفع الصورة للباك إند
       await new Promise((resolve) => setTimeout(resolve, 1500));
     } catch (err) {
       alert("حدث خطأ أثناء تحديث الصورة");
-      setProfileImage(imagePath); // إرجاع الصورة الأصلية في حالة الخطأ
+      setProfileImage(imagePath);
     } finally {
       setIsUpdatingPhoto(false);
     }
@@ -87,34 +66,34 @@ const Profile = () => {
   const lessons = [
     {
       id: 1,
-      title: viewsCount?.toString() || "0",
+      title: ViewsCount?.toString() || "0",
       href: "#",
       color: "blue",
       image: <img src="/book.png" alt="icon" className="w-6 h-6 sm:w-8 sm:h-8" />,
-      text: viewsCount?.toString() || "0",
+      text: ViewsCount?.toString() || "0",
       desc: "الدروس الكلية"
     },
     {
       id: 2,
-      title: downloadsCount?.toString() || "0",
+      title: DownloadsCount?.toString() || "0",
       href: "#",
       color: "yellow",
       image: <img src="/download.png" alt="icon" className="w-6 h-6 sm:w-8 sm:h-8" />,
-      text: downloadsCount?.toString() || "0",
+      text: DownloadsCount?.toString() || "0",
       desc: "الدروس المحملة"
     },
     {
       id: 3,
-      title: totalStudyTime || "0",
+      title: TotalStudyTime || "0",
       href: "#",
       color: "red",
       image: <img src="/clock2.png" alt="icon" className="w-6 h-6 sm:w-8 sm:h-8" />,
-      text: totalStudyTime || "0",
+      text: TotalStudyTime || "0",
       desc: "زمن الدراسة"
     }
   ];
 
-  const chartData = dailyAchievements.map(({ day, studyTime }) => ({
+  const chartData = DailyAchievements.map(({ day, studyTime }) => ({
     day,
     value: parseInt(studyTime) || 0,
   }));
@@ -125,7 +104,7 @@ const Profile = () => {
       <div className="flex flex-col items-center my-6 sm:my-8 md:my-10">
         <div className="flex flex-col items-center gap-3 sm:gap-4">
           
-          {/* صورة المستخدم مع إمكانية التحديث */}
+          {/* صورة المستخدم */}
           <div className="relative group">
             <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-45 md:h-45 rounded-full overflow-hidden border-0 border-white shadow-lg">
               <img
@@ -133,12 +112,11 @@ const Profile = () => {
                 alt="User Avatar"
                 className="w-full h-full object-cover"
                 onError={(e) => {
-                  // في حالة فشل تحميل الصورة، استخدم الصورة الافتراضية
                   e.target.src = "/Frame 1984078091.png";
                 }}
               />
             </div>
-            
+
             {/* زر تحديث الصورة */}
             <label className="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full p-1.5 sm:p-2 cursor-pointer shadow-lg transition-all duration-200 transform hover:scale-110">
               {isUpdatingPhoto ? (
@@ -161,49 +139,18 @@ const Profile = () => {
 
           {/* اسم المستخدم */}
           <div className="flex flex-col items-center gap-2 sm:gap-3 w-full max-w-sm">
-            <div className="flex flex-col items-center">
-              {savedName && (
-                <p className="text-base sm:text-lg font-bold text-gray-800 mt-1">{savedName}</p>
-              )}
-            </div>
-            
-            <div className="relative w-full max-w-xs sm:max-w-sm">
-              <input
-                type="text"
-                value={editedName}
-                onChange={(e) => setEditedName(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && editedName.trim()) handleNameUpdate();
-                }}
-                placeholder="تحديث اسم المستخدم"
-                className="px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-center w-full pr-8 sm:pr-10 text-sm sm:text-base"
-              />
-
-              {/* أيقونة القلم داخل حقل الإدخال */}
-              <button
-                onClick={handleNameUpdate}
-                disabled={isUpdatingName || !editedName.trim()}
-                className="absolute top-1/2 right-2 transform -translate-y-1/2 p-1 text-blue-600 hover:bg-blue-200 rounded-xl transition-all"
-                title="تحديث الاسم"
-              >
-                {isUpdatingName ? (
-                  <div className="animate-spin w-4 h-4 sm:w-5 sm:h-5 border-2 border-blue-600 border-t-transparent rounded-full"></div>
-                ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536M9 11l6.536-6.536a2 2 0 012.828 0l.172.172a2 2 0 010 2.828L12 15H9v-3z" />
-                  </svg>
-                )}
-              </button>
-            </div>
+            <p className="text-lg sm:text-xl font-bold text-gray-800 mt-1 text-center">
+              {displayName}
+            </p>
           </div>
 
           {/* رقم الهاتف */}
           <p className="text-gray-500 text-xs sm:text-sm">
-            {phone}
+            {PhoneNumber}
           </p>
 
           {/* المستوى */}
-          <p className="text-gray-600 text-xs sm:text-sm">{level}</p>
+          <p className="text-gray-600 text-xs sm:text-sm">{Level}</p>
         </div>
       </div>
 

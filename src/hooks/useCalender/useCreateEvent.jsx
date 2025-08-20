@@ -11,10 +11,8 @@ const useCreateEvent = () => {
 
     try {
       const response = await AxiosInstance.post('/api/StudentCalenders/Create', {
-        day: eventData.day,
-        month: eventData.month,
-        year: eventData.year,
-        notes: eventData.note || eventData.notes,
+        date: eventData.date,
+        notes: eventData.notes,
         color: eventData.color
       });
 
