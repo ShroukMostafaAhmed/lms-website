@@ -1,0 +1,64 @@
+.swal-btn {
+    padding: 8px 15px;
+    border: 1px solid #4a90e2;
+    background-color: white;
+    color: #4a90e2;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.swal-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.custom-select-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid #4a90e2;
+    border-radius: 8px;
+    padding: 5px 10px;
+    width: 120px;
+}
+
+.custom-select {
+    width: 100%;
+    padding: 5px;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    color: #ccc;
+    appearance: none;
+    outline: none;
+    direction: rtl;
+}
+
+.arrow {
+    color: #4a90e2;
+    font-size: 18px;
+    margin-left: 5px;
+    pointer-events: none;
+}
+
+.color-option {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: 2px solid transparent;
+    outline-offset: 4px; /* This creates the gap */
+    transition: outline-color 0.1s ease;
+}
+
+.color-option:hover, .color-option.selected {
+    outline-color: #4a90e2;
+}
+
+.swal-select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #4a90e2;
+    border-radius: 5px;
+    font-size: 14px;
+}
