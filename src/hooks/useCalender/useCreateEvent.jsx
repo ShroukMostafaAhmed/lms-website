@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import AxiosInstance from "../../utils/AxiosInstance.jsx";
 
 const useCreateEvent = () => {
@@ -10,19 +10,27 @@ const useCreateEvent = () => {
     setError(null);
 
     try {
-      const response = await AxiosInstance.post('/api/StudentCalenders/Create', {
-        date: eventData.date,
-        notes: eventData.notes,
-        color: eventData.color
-      });
+      // Send data in the format expected by the API
+      const response = await AxiosInstance.post(
+        "/api/StudentCalenders/Create",
+        {
+          date: eventData.date, // ISO date string
+          notes: eventData.notes, // Keep as notes
+          color: eventData.color, // Color value
+        }
+      );
 
+      console.log("Create event response:", response.data);
       setIsLoading(false);
-      return response.data;
+
+      // Return the created event data
+      return response.data.data || response.data;
     } catch (err) {
+      console.error("Create event error:", err);
       const message =
         err.response?.data?.message ||
         err.message ||
-        'حدث خطأ غير متوقع أثناء إرسال البيانات';
+        "حدث خطأ غير متوقع أثناء إرسال البيانات";
       setError(message);
       setIsLoading(false);
       throw new Error(message);
@@ -32,7 +40,7 @@ const useCreateEvent = () => {
   return {
     createEvent,
     isLoading,
-    error
+    error,
   };
 };
 

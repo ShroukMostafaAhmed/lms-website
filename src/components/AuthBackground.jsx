@@ -4,8 +4,8 @@ function AuthBackground() {
   return (
     <div className="absolute inset-0 pointer-events-none">
       {/* ديكور يسار علوي (Mirror) */}
-      <div className="absolute top-97 left-135 transform -translate-y-1/2 w-28 h-40 md:w-36 md:h-48 lg:w-40 lg:h-52 z-50">
-        <img src="/Frame 1984078117.png" alt="Left Decoration" className="w-full h-full object-contain" />
+      <div className="absolute top-85 left-135 transform -translate-y-1/2 w-28 h-40 md:w-36 md:h-48 lg:w-40 lg:h-52 z-50">
+        <img src="/boyy.png" alt="Left Decoration" className="w-full h-full object-contain" />
       </div>
 
       {/* ديكور سفلي يمين */}

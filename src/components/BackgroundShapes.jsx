@@ -3,12 +3,12 @@ import React from 'react';
 export default function BackgroundShapes() {
   return (
     <>
-<div className="absolute top-[32%] left-0 w-[400px] h-[1220px] bg-gradient-to-r from-blue-200 to-white z-0 blur-md opacity-40 rounded-tr-[150px] rounded-br-[10px]" />
+<div className="absolute top-[25%] left-0 w-[400px] h-[1542px] bg-gradient-to-r from-blue-200 to-white z-0 blur-md opacity-40 rounded-tr-[150px] rounded-br-[10px]" />
 
 <img
   src="/shapes/shape_111.png"
   alt="Shape 111"
-  className="absolute top-[36%] left-0 w-[300px] z-0"
+  className="absolute top-[30%] left-0 w-[300px] z-0"
 />
 
   <img
